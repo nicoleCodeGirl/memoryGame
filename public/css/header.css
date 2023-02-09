@@ -1,0 +1,76 @@
+/* ============================
+        Body
+=============================*/
+body{
+    background: url(../photos/earthHands.jpeg)  center center no-repeat;
+    background-size: cover;
+    height: 1000px;
+    text-align: center;
+    padding: 5px;
+}
+
+/*============================
+        Header
+=============================*/
+header {
+    margin-top:-14px;
+    height: 50px;
+    background-color: lightpink;
+}
+
+#playerWelcome, 
+#headerDate, 
+#logOut{
+    margin: 5px;
+}
+
+#logoutForm{
+    margin-top:-4px;
+}
+
+#backToGame{
+    margin-top:1px;
+    margin-right: 5px;
+}
+
+#playerWelcome{
+    float: left;
+}
+
+#floatRight{
+     float:right;
+}
+
+
+#headerDate{
+    font-size: small;
+    color: purple;
+}
+
+#headerLinks{
+    display: inline-flex;
+}
+
+#headerLinks button{
+    background-color: rgb(104, 104, 209);
+    color: white;
+    height: 20px;
+}
+
+
+a{
+    text-decoration: none;
+}
+
+/*============================
+        Title
+=============================*/
+
+#motherNatureH1{
+    text-shadow: 2px 2px 2px green, -2px -2px 2px lightgreen;
+    margin-left: 12%;
+}
+
+
+
+

@@ -1,0 +1,75 @@
+/*============================
+        Leaderboard page
+=============================*/
+
+#logIn{
+    margin-right: 5px;
+}
+
+
+#leaderBoardWrapper{
+    background-color:rgb(240, 194, 135);
+    border: 2px solid brown; 
+    width: 48%;
+    height: 48%;
+    margin: 0px auto 0px 32%;
+}
+
+#leaderBoardH1{
+    background-color:brown;
+    border: 1px solid brown;
+    margin-top: 0px;
+    color: white;
+    text-shadow:  4px -2px 0px green;
+}
+
+.profileNames{
+    margin: 10px auto 10px auto;
+    color: purple;
+}
+
+
+/*============================
+        Table
+=============================*/
+#leaderBoardTable{
+    width: 100%;
+}
+
+#tableWrapper{
+    height:92%;
+    overflow: auto;
+    margin-top:-22px;
+}
+
+
+#filterDiv{
+    background-color: pink;
+    padding: 5px;
+    width: 47%;
+    margin: 5px auto 0px 32%;
+}
+
+#filterWrapper{
+    background-color:rgb(241, 189, 226);
+    border: 2px solid brown;    
+}
+
+
+select{
+    margin: 5px;
+}
+
+#filterNowBtn{
+    background-color: brown;
+    color: white;
+}
+
+#filterDefault{
+    display:none;
+}
+
+/*This is the scroll bar on the leaderboard table*/
+/*It also changes the scrollbar of the browser*/
+::-webkit-scrollbar {width: 9px; height: .5px; background: rgb(245, 180, 95); }
+::-webkit-scrollbar-thumb { background-color: rgb(211, 95, 95); border-radius: 1ex; }

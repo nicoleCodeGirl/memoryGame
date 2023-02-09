@@ -1,0 +1,121 @@
+/*============================
+        Home page
+=============================*/
+
+#playersWrapper{
+    background-color:rgb(240, 194, 135);
+    border: 2px solid brown; 
+    width: 48%;
+    height: 48%;
+    margin: 0px auto 0px 32%;
+    display: block;
+}
+
+.profileNames{
+    display: block;
+    margin: 10px auto 10px auto;
+    color: black;
+    background-color: transparent;
+}
+
+.profileNames:visited{
+    color:black
+}
+
+.profileNames:active{
+    color:red;
+}
+
+/*The wrappers aren't displayed first except 
+the one to select a profile*/
+#selectProfileWrapper{
+    display:block;
+}
+
+#selectPlayerPlzWrapper,
+#deletePlayerWrapper,
+#createPlayerWrapper,
+#enterPswdWrapper,
+#backToGame,
+.hidden{
+    display:none;
+}
+
+
+#selectProfileBody,
+#selectPlayerPlzBody,
+#deletePlayerBody,
+#createPlayerBody,
+#enterPswdBody{
+    height: 24rem;
+}
+
+#selectProfileBody{
+    overflow: auto;
+}
+
+
+#selectProfileH1, 
+#selectPlayerPlzH1,
+#deletePlayerH1,
+#createPlayerH1,
+#enterPswdH1{
+    background-color:brown;
+    border: 1px solid brown;
+    margin-top: 0px;
+    color: white;
+    text-shadow:  4px -2px 0px green;
+}
+
+#selectProfileButtons button,
+#okBtn,
+#deletePlayerButtons button,
+#createPlayerButtons button,
+#doneCreate,
+#enterPswdButtons button,
+#enterPswdButtons input{
+    background-color:green;
+    color: white;
+    width: 30%;
+    height: 30%;
+}
+
+#createPlayerButtons{
+    margin-top:50px;
+}
+
+/*warning text*/
+#nameTaken,
+#warningTxt,
+#spacesTxt, 
+#incorrectPswd,
+#enterPswdTxt{
+    opacity: 0;
+    color: red;
+    margin-top:0px;
+}
+
+
+
+/*popup that displays when you're ojn the home page still logged in*/
+#homePopupWrapper{
+    display: none;
+    width: 98%;
+    height: 98%;
+    margin: -17px auto 0px auto;
+    background: url(../photos/homePopup.jpeg)  center center no-repeat;
+    background-size: cover;
+}
+
+#homePopupH1{
+    background-color: rgb(95, 133, 58);
+    color: black;
+    text-shadow: 2px 2px 2px yellow;
+    opacity: .75;
+}
+
+
+/*The scrollbar of the browser*/
+::-webkit-scrollbar {width: 9px; height: .5px; background: rgba(241, 190, 197, 0.503); }
+::-webkit-scrollbar-thumb { background-color: rgb(109, 109, 233); border-radius: 1ex; }
+

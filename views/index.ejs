@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"/>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="css/header.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+
+</head>
+<body>
+    <header>
+        <h3 id="playerWelcome">Welcome <span id="playerName"><%= currentUser %></span>!</h3>
+        <div id="floatRight">
+            <h2 id="headerDate"></h2>
+            <div id="headerLinks">
+                <form id="gameBoardForm" name="gameBoardForm" action="/backToGame" method="POST">
+                    <input type="text" name="current_user" id="currentUserInput" style="display:none">
+                    <a href="http://localhost:3000/memoryGame"><button id="backToGame">Back to Game</button></a>
+                </form>
+                <a href="http://localhost:3000/leaderBoard"><button id="goToLeaderBoard">Leaderboard</button></a>
+                <form id="logoutForm" name="logOutForm" action="/logOut" method="POST">
+                    <input type="text" name="logOut" id="logOutInput" style="display:none" value="yes">
+                    <button type="submit" id="logOut">Log out</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <h1 id="motherNatureH1">Mother Nature Memory Game</h1>
+
+    <!--============================================
+                        SELECT PLAYER
+    ==============================================-->
+    <div id="playersWrapper">
+            
+        <div id="selectProfileWrapper">
+            <div id="selectProfileBody">
+                <h1 id="selectProfileH1">Select Profile</h1>
+                <% if(users.length > 0) {%>
+                    <% users.forEach(function(user){ %>
+                        <button class="profileNames">
+                        <%= user.user_name %>
+                    </button>
+                    <% }) %>
+                <% } else if (users.length == 0) { %>
+                    <h1>There are no player profiles yet!</h1>
+                <% } %>
+            </div>
+            <div id="selectProfileButtons">
+                <button id="deleteBtn">Delete</button>
+                <button id="selectBtn">Select</button>
+                <button id="createBtn" >Create</button>
+            </div>
+        </div><!--end selectProfileWrapper-->
+
+        <!--============================================
+                        SELECT PLAYER PLZ
+        ==============================================-->
+        <div id="selectPlayerPlzWrapper">
+                <div id="selectPlayerPlzBody">
+                    <h1 id="selectPlayerPlzH1">Please select a player!</h1>
+                    <img id="playerIcon" src="photos/player_icon.png"/>
+                </div>
+                <div id="">
+                    <button id="okBtn">OK</button>
+                </div>
+            </div><!--end selectPlayerPlzWrapper-->
+
+        <!--============================================
+                        DELETE PLAYER
+        ==============================================-->    
+        <div id="deletePlayerWrapper">
+            <div id="deletePlayerBody">
+                <h1 id="deletePlayerH1">DELETE PLAYER?</h1>
+                <h2>Are you sure you want to delete <span id="deleteName">player</span>?</h2>
+                <h2>This can't be undone.</h2>
+            </div>
+            <div id="deletePlayerButtons">
+                <button id="noDelete">No</button>
+                <button id="yesDelete">Yes</button>
+            </div>
+        </div><!--end deletePlayerWrapper-->
+
+        <!--============================================
+                        CREATE PLAYER
+        ==============================================-->
+        <div id="createPlayerWrapper">
+          <form id="createUserForm" name="createUser" action="/createUser" method="POST">      
+                <div id="createPlayerBody">
+                    <h1 id="createPlayerH1">CREATE NEW PLAYER?</h1>
+                    <h2>Enter your name:</h2>
+                    <input type="text" id="newPlayer" name="newPlayer" autocomplete="off" required/>
+                    <p id="nameTaken">User name already exists in database!</p>
+
+                    <h2>Create Password:</h2>
+                    <input type="password" id="createdPswd" name="createdPswd" required/>
+
+                    <h2>Confirm Password:</h2>
+                    <input type="password" id="confirmPswd" required/>
+                    <p id="warningTxt">Both password entries must match!</p>
+                    <p id="spacesTxt">Do not include spaces, capitals, or symbols</p>
+                    <p id="enterPswdTxt">Please enter a password!</p>
+                </div><!--end createPlayerBody-->
+                <div id="createPlayerButtons">
+                        <button id="cancelCreate">Cancel</button>
+                        <input type="submit" id="doneCreate" value="Done"/>
+                </div><!--end createPlayerButtons-->
+               </form> 
+            </div><!--end createPlayerWrapper-->
+             
+            <!--============================================
+                        ENTER PASSWORD
+            ==============================================-->
+            <div id="enterPswdWrapper">
+                <form id="enterPswdForm" name="enterPswd" action="/enterPswd" method="POST">
+                    <div id="enterPswdBody">
+                        <h1 id="enterPswdH1"><span id="yourName" ></span></h1>
+                        <input type="text" id ="yourNamePost" name="yourName" style="display:none"/>
+                        <h2>Enter password please:</h2>
+                        <input type="password" id="pswdEntered" name="pswdEntered" required/>
+                        <p id="incorrectPswd">Incorrect Password</p>
+                        <div class="hidden">
+                            <input type="text" id="stat" name="pswdStat" style="opacity: 0"/>
+                        </div>
+
+                    </div><!--end enterPswdBodyy-->
+                    <div id="enterPswdButtons">
+                        <button id="pswdCancelBtn">Cancel</button>
+                        <input type="submit" id="pswdConfirmBtn" value="Done"/>
+                    </div><!--end enterPswdButton-->
+                </form> 
+            </div><!--end enterPswdWrapper-->   
+
+        <!--============================================
+                        Home popup
+        ==============================================-->
+        <div id="homePopupWrapper">
+            <h1 id="homePopupH1">Please log out to create, select, or delete players!</h1>  
+        </div><!--end homePopupWrapper-->
+
+
+    </div><!--end playersWrapper-->
+
+
+    <!--=============================================================
+                            Hidden 
+             used for creating variabloes from server-side
+    ==============================================================-->
+    <div class = "hidden">
+        <% users.forEach(function(user){ %>
+            <p class="hiddenPswds"> <%= user.pswd %> </p>
+        <% }) %>
+    </div>
+
+    <script src="js/updateClock.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

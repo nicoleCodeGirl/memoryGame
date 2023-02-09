@@ -1,0 +1,182 @@
+/*============================
+        MemoryGame page
+=============================*/
+
+/*Everything that should not be displayed at first*/
+#backToGame,
+.hidden,
+.cardImg{
+    display:none;
+}
+
+
+/*memory game instructions*/
+#instructions{
+    text-shadow: 2px 2px 2px lightskyblue, -2px -2px 2px lightblue;
+}
+
+#startTimeH4{
+    background-color: azure;
+    color: darkblue;
+    width: 176px;
+    margin: 0px auto 5px auto;
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#startTimeSpan{
+    color: red;
+}
+
+#newGameBtn{
+    margin: 5px;
+    background-color: yellow;
+    border: 1px solid red;
+    box-shadow: 1px 1px 1px 1px rgba(224, 79, 79, 0.705);
+}
+
+#gameWrapper{
+    background-color: green;
+    height: auto;
+    width: 96%;
+    margin: auto;
+    padding: 5px;
+}
+
+.row{
+   width: 99%;
+   height: 141.5px; 
+   border: 1px solid blue;
+   margin:auto;
+   padding: 3px;
+   background-color: white;
+   display: flex;
+}
+
+.card{
+   flex:1;
+   border: 1px solid blue;
+   margin:5px;
+   background-color: white;
+   display: inline-block;
+}
+
+.cardImg{
+    width: 100%;
+    height: 100%; 
+    position: relative;
+    z-index: 300;
+}
+
+.card_back{
+   width: 100%;
+   height: 100%; 
+   position: relative;
+   background-color: black;
+   background: linear-gradient( to left top , 
+        rgb(3, 79, 29),
+        rgb(50, 128, 67),
+        rgb(230, 72, 170),
+        rgb(155, 43, 112),
+        rgb(3, 79, 29),
+        rgb(50, 128, 67),
+        rgb(230, 72, 170),
+        rgb(237, 167, 210)
+        );
+   display:block;
+}
+
+#matchFound,#noMatch, #NewGameH1{
+    position: fixed;
+    z-index: 300;
+    top: 35%;
+    left: 30%;
+    margin: 5px auto 5px auto;
+    font-size: 500%;
+    background: -webkit-linear-gradient(red, blue);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-stroke-color: aqua;
+    -webkit-text-stroke-width:2px;
+    opacity:0;
+    display: none;
+}
+
+
+/*============================
+        Post Score Popup
+=============================*/
+#hideGame{
+    display:block;
+}
+
+#postScorePopUp,
+#leavePagePopUp{
+    background-color:rgb(240, 194, 135);
+    border: 2px solid brown; 
+    width: 48%;
+    height: 48%;
+    margin: 0px auto 0px 32%;
+    display: none;
+}
+
+
+/*H1's for the divs to post score or leave page*/
+#goodJob,
+#leavePageH1{
+    background-color:brown;
+    border: 1px solid brown;
+    margin-top: 0px;
+    color: white;
+    text-shadow:  4px -2px 0px green;
+}
+
+#postScoreButtons, form{
+    display: inline-flex;
+    width: 80%;
+    height:auto;
+}
+
+#noPost,
+#yesPost, 
+#leavePage, 
+#stayOnPage{
+    background-color:green;
+    color: white;
+}
+
+/*==================
+    Buttons
+====================*/
+#noPost{
+    width: 50%;
+    height: 30%;
+}
+
+#yesPost{
+    width: 60%;
+    height: 100%;
+    margin-left: 32%;
+}
+
+#leavePage, 
+#stayOnPage{
+    width: 30%;
+    height: 30%;
+}
+
+
+#postScoreBody{
+    height: 19rem;
+}
+#leavePageBody{
+    height: 24rem;
+    color:darkblue;
+    text-shadow: 1px 1px 1px white;
+}
+
+/*The scrollbar of the browser*/
+::-webkit-scrollbar {width: 9px; height: .5px; background: rgba(241, 190, 197, 0.503); }
+::-webkit-scrollbar-thumb { background-color: rgb(109, 109, 233); border-radius: 1ex; }

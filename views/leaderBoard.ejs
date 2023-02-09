@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"/>
+    <meta charset="utf-8">
+    <title>LeaderBoard</title>
+    <link rel="stylesheet" href="css/header.css"/>
+    <link rel="stylesheet" href="css/leaderBoard.css"/>
+
+</head>
+<body>
+    <header>
+        <h3 id="playerWelcome">Welcome <span id="playerName" name="current_user"><%= currentUser %></span>!</h3>
+        <div id="floatRight">
+            <h2 id="headerDate"></h2>
+            <div id="headerLinks">
+                <form id="gameBoardForm" name="gameBoardForm" action="/backToGame" method="POST">
+                    <input type="text" name="current_user" id="currentUserInput" style="display:none">
+                    <a href="http://localhost:3000/memoryGame"><button id="backToGame">Back to Game</button></a>
+                </form>
+                <a href="http://localhost:3000/"><button id="logIn">Log In</button></a>
+                <form id="logoutForm" name="logOutForm" action="/logOut" method="POST">
+                    <input type="text" name="logOut" id="logOutInput" style="display:none" value="yes">
+                    <button type="submit" id="logOut">Log out</button>
+                </form>
+            </div>
+        </div>
+    </header>
+    
+    <h1 id="motherNatureH1">Mother Nature Memory Game</h1>
+
+   
+    <div id="leaderBoardWrapper">
+        <h1 id="leaderBoardH1">Leader Board</h1>
+        <div id="tableWrapper">
+            <table id="leaderBoardTable" cellpadding="10" cellspacing="5">
+                <tbody>
+                    <tr class="days">
+                    <th scope="col">Date:</th>
+                    <th scope="col">Name:</th>
+                    <th scope="col">Seconds Completed:</th>
+                    </tr>
+            
+                <% if(winners.length > 0) {%>
+                    <% winners.forEach(function(winner){ %>
+                        <tr>
+                        <td><%= winner.game_date %> </td>
+                        <td><%= winner.user_name %></td>
+                        <td><%= winner.game_complete %> seconds</td>
+                        </tr>
+                         <% }) %>
+                        <% } else if (winners.length == 0) { %>
+                            <h1>There are no player scores yet!</h1>
+                        <% } %>
+                </tbody>
+            </table>
+        </div><!--end table wrapper-->
+    </div><!--end leaderBoardWrapper-->
+
+
+    <div id="filterDiv">
+        <div id="filterWrapper">
+            <span type="text" id="filterDefault"> <%= filter_default %> </span>
+            <form id="filterForm" action="/leaderBoard" method="POST">
+            <label id="filterLabel">Filter scores by:</label>
+            <select name="filter_option" id="choose">
+                <option value="all_Players" >All Player Scores</option>
+                <option value="active_Players">Active Player Scores</option>
+                <option value="your_Scores">Only your scores</option>
+                <input id="filterNowBtn" type="submit" value="Filter Now"/>
+            </select>
+        </form>
+    </div><!--end filterDiv-->
+
+    <script src="js/updateClock.js"></script>
+    <script src="js/leaderBoard.js"></script>
+</body>
+</html>

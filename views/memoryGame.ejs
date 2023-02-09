@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"/>
+    <meta charset="utf-8">
+    <title>Game</title>
+    <link rel="stylesheet" href="css/header.css"/>
+    <link rel="stylesheet" href="css/memoryGame.css"/>
+
+</head>
+<body>
+    
+    <header>
+        <h3 id="playerWelcome">Welcome <span id="playerName"><%= currentUser %></span>!</h3>
+        <div id="floatRight">
+            <h2 id="headerDate"></h2>
+            <div id="headerLinks">
+                <a href="http://localhost:3000/leaderBoard"><button id="goToLeaderBoard">Leaderboard</button></a>
+                <form id="logoutForm" name="logOutForm" action="/logOut" method="POST">
+                    <input type="text" name="logOut" id="logOutInput" style="display:none" value="yes">
+                    <button type="submit" id="logOut">Log out</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <h1 id="motherNatureH1">Mother Nature Memory Game</h1>
+
+    <div id="hideGame">
+        <div id="playGameWrapper">
+            <h2 id="instructions">Instructions: find the matches to each image you turn over</h2>
+            <h4 id="startTimeH4">Start Time: <span id="startTimeSpan"></span></h4>
+            <button id="newGameBtn">New Game</button>
+    
+            <div id="gameWrapper">
+                <div class="row">
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                </div>
+
+                <div class="row">
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                </div>
+
+                <div class="row">
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div> 
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                </div>
+
+                <div class="row">
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                </div>
+
+                <div class="row">
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                </div>
+
+            </div><!--end gameWrapper-->
+        </div><!--end playGameWrapper-->
+    </div><!--end hideGame-->
+
+    <h1 id="matchFound">Match Found!</h1>
+    <h1 id="noMatch">Not a Match!</h1>
+    <h1 id="NewGameH1">New Game!!</h1>
+
+    
+    <!--============================================
+                Pop up to post scores
+    ==============================================-->
+    <div id="postScorePopUp">
+        <h1 id="goodJob">Good Job, <%= currentUser %> ! </h1>
+        <div id="postScoreBody">
+            <h3>Time Completed: <span id="timeSpan"></span></h3>
+            <h3>Post score to Leaderboard?</h3>
+        </div><!--end postScoreBody-->
+
+        <div id="postScoreButtons">
+            <button id="noPost">No</button>
+            <form id="postScoreForm" action="/postScore" method="POST">
+                <input id="yesPost" type="submit" value="Yes"/>
+                <div class="hidden">
+                    <input type="text" id="player_name" name="player_name">
+                    <input type="text" id="date_played" name="date_played"/>
+                    <input type="text" id="time_start" name="time_start"/>
+                    <input type="text" id="time_end" name="time_end"/>
+                    <input type="text" id="total_time" name="total_time"/>
+                </div>
+            </form>
+        </div>
+    </div><!--end postScorePopup-->
+
+    <!--========================================
+            Popup when leaving page
+    ============================================-->   
+
+    <div id="leavePagePopUp">
+        <h1 id="leavePageH1">Hello, <%= currentUser %> ! </h1>
+        <div id="leavePageBody">
+            <h1>Leaving the page will cause your game to refresh.</h1>
+            <h2>Are you sure you want to leave the page?</h2>
+            <img src="photos/helloPlayer.jpeg"
+        </div><!--end leavePageBody-->
+        <div id="leavePageButtons">
+            <button id="leavePage">Yes</button>
+            <button id="stayOnPage">No</button>
+        </div><!--end leavePageButtons-->
+    </div><!--end leavePagePopUP-->
+
+    <script src="js/updateClock.js"></script>
+    <script src="js/memoryGame.js"></script>
+</body>
+</html>
