@@ -417,7 +417,7 @@ connection.connect(function(err) {
     /*=====================================
             APP LISTENING ON PORT
     ======================================*/
-    app.listen(PORT, function() {
+    app.listen(process.env.PORT | PORT, function() {
     console.log("App listening on PORT " + PORT);
     });//end app.listen
 
