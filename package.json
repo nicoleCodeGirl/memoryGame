@@ -19,15 +19,9 @@
     "body-parser": "^1.19.0",
     "ejs": "^3.1.8",
     "express": "^4.17.1",
-<<<<<<< HEAD
     "mysql2": "^3.9.2",
     "npm": "^9.4.2",
     "nvm": "^0.0.4"
-=======
-    "mysql": "^2.18.1",
-    "mysql2": "^3.9.2",
-    "npm": "^9.4.2"
->>>>>>> 98a51a336b1c97faa0433fae9236196e0d93eb7d
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

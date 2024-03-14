@@ -28,11 +28,7 @@ var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-<<<<<<< HEAD
     password: "butterflyMySql619!"
-=======
-    password: "root"
->>>>>>> 98a51a336b1c97faa0433fae9236196e0d93eb7d
    });
 
 //CONNECT
