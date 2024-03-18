@@ -116,12 +116,12 @@ connection.connect(function(err) {
 
     //hardcoding leaderboard scores
     connection.query("INSERT INTO memorygamedb.leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?,?,?,?,?)", ['Sarah', '1/12/19', '10:30:00', '10:40:00', '600']);
-    connection.query("INSERT INTO memorygamedb.leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?,?,?,?,?)", ['Sarah', '1/13/19', '12:12:00', '12:12:10', '10']);
+    connection.query("INSERT INTO memorygamedb.leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?,?,?,?,?)", ['Sarah', '1/13/19', '12:12:00', '12:12:10', '310']);
     connection.query("INSERT INTO memorygamedb.leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?,?,?,?,?)", ['Bobby', '10/13/17', '12:00:00', '12:20:00', '1200']);
     connection.query("INSERT INTO memorygamedb.leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?,?,?,?,?)", ['Bobby', '09/08/18', '11:00:00', '11:30:00', '1800']);
     connection.query("INSERT INTO memorygamedb.leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?,?,?,?,?)", ['Jessica', '09/18/17', '10:00:00', '10:40:00', '2400']);
-    connection.query("INSERT INTO memorygamedb.leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?,?,?,?,?)", ['Jessica', '10/28/19', '10:00:00', '10:10:00', '60']);
-    connection.query("INSERT INTO memorygamedb.leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?,?,?,?,?)", ['Donte', '10/29/19', '09:00:00', '09:00:40', '40']);
+    connection.query("INSERT INTO memorygamedb.leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?,?,?,?,?)", ['Jessica', '10/28/19', '10:00:00', '10:10:00', '260']);
+    connection.query("INSERT INTO memorygamedb.leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?,?,?,?,?)", ['Donte', '10/29/19', '09:00:00', '09:00:40', '340']);
     connection.query("INSERT INTO memorygamedb.leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?,?,?,?,?)", ['Donte', '10/28/19', '10:00:00', '10:50:00', '3000']);
     connection.query("INSERT INTO memorygamedb.leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?,?,?,?,?)", ['Amy', '11/12/18', '10:00:00', '10:55:00', '3300']);
     connection.query("INSERT INTO memorygamedb.leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?,?,?,?,?)", ['Amy', '11/15/19', '12:00:00', '12:56:00', '3360']);
