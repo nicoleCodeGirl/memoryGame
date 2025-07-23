@@ -15,13 +15,15 @@
             <h2 id="headerDate"></h2>
             <div id="headerLinks">
                 <form id="gameBoardForm" name="gameBoardForm" action="/backToGame" method="POST">
-                    <input type="text" name="current_user" id="currentUserInput" style="display:none">
-                    <a href="http://localhost:3000/memoryGame"><button id="backToGame">Back to Game</button></a>
+                    <input type="hidden" name="current_user" id="currentUserInput">
+                    <button id="backToGame" type="submit" aria-label="Back to Game">Back to Game</button>
                 </form>
-                <a href="http://localhost:3000/leaderBoard"><button id="goToLeaderBoard">Leaderboard</button></a>
+                <a href="http://localhost:3000/leaderBoard">
+                    <button id="goToLeaderBoard" type="button" aria-label="Go to Leaderboard">Leaderboard</button>
+                </a>
                 <form id="logoutForm" name="logOutForm" action="/logOut" method="POST">
-                    <input type="text" name="logOut" id="logOutInput" style="display:none" value="yes">
-                    <button type="submit" id="logOut">Log out</button>
+                    <input type="hidden" name="logOut" id="logOutInput" value="yes">
+                    <button type="submit" id="logOut" aria-label="Log out">Log out</button>
                 </form>
             </div>
         </div>
@@ -39,7 +41,7 @@
                 <h1 id="selectProfileH1">Select Profile</h1>
                 <% if(users.length > 0) {%>
                     <% users.forEach(function(user){ %>
-                        <button class="profileNames">
+                        <button class="profileNames" aria-label="Select profile <%= user.user_name %>">
                         <%= user.user_name %>
                     </button>
                     <% }) %>
@@ -48,9 +50,9 @@
                 <% } %>
             </div>
             <div id="selectProfileButtons">
-                <button id="deleteBtn">Delete</button>
-                <button id="selectBtn">Select</button>
-                <button id="createBtn" >Create</button>
+                <button id="deleteBtn" type="button" aria-label="Delete profile">Delete</button>
+                <button id="selectBtn" type="button" aria-label="Select profile">Select</button>
+                <button id="createBtn" type="button" aria-label="Create profile">Create</button>
             </div>
         </div><!--end selectProfileWrapper-->
 
@@ -63,7 +65,7 @@
                     <img id="playerIcon" src="photos/player_icon.png"/>
                 </div>
                 <div id="">
-                    <button id="okBtn">OK</button>
+                    <button id="okBtn" type="button" aria-label="OK">OK</button>
                 </div>
             </div><!--end selectPlayerPlzWrapper-->
 
@@ -77,8 +79,8 @@
                 <h2>This can't be undone.</h2>
             </div>
             <div id="deletePlayerButtons">
-                <button id="noDelete">No</button>
-                <button id="yesDelete">Yes</button>
+                <button id="noDelete" type="button" aria-label="No">No</button>
+                <button id="yesDelete" type="button" aria-label="Yes">Yes</button>
             </div>
         </div><!--end deletePlayerWrapper-->
 
@@ -103,7 +105,7 @@
                     <p id="enterPswdTxt">Please enter a password!</p>
                 </div><!--end createPlayerBody-->
                 <div id="createPlayerButtons">
-                        <button id="cancelCreate">Cancel</button>
+                        <button id="cancelCreate" type="button" aria-label="Cancel">Cancel</button>
                         <input type="submit" id="doneCreate" value="Done"/>
                 </div><!--end createPlayerButtons-->
                </form> 
@@ -126,7 +128,7 @@
 
                     </div><!--end enterPswdBodyy-->
                     <div id="enterPswdButtons">
-                        <button id="pswdCancelBtn">Cancel</button>
+                        <button id="pswdCancelBtn" type="button" aria-label="Cancel">Cancel</button>
                         <input type="submit" id="pswdConfirmBtn" value="Done"/>
                     </div><!--end enterPswdButton-->
                 </form> 
