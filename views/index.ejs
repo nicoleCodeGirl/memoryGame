@@ -3,155 +3,42 @@
 <head>
     <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1.0, user-scalable=no"/>
     <meta charset="utf-8">
-    <title>Home</title>
+    <title>NicoleCodeGirl Memory Game</title>
     <link rel="stylesheet" href="css/header.css"/>
     <link rel="stylesheet" href="css/index.css"/>
 </head>
 <body>
     <header>
-        <h3 id="playerWelcome">Welcome <span id="playerName"><%= currentUser %></span>!</h3>
+        <h3 id="playerWelcome">Welcome to NicoleCodeGirl Memory Game!</h3>
         <div id="floatRight">
             <h2 id="headerDate"></h2>
             <div id="headerLinks">
-                <form id="gameBoardForm" name="gameBoardForm" action="/backToGame" method="POST">
-                    <input type="hidden" name="current_user" id="currentUserInput">
-                    <button id="backToGame" type="submit" aria-label="Back to Game">Back to Game</button>
-                </form>
                 <a href="/leaderBoard">
                     <button id="goToLeaderBoard" type="button" aria-label="Go to Leaderboard">Leaderboard</button>
                 </a>
-                <form id="logoutForm" name="logOutForm" action="/logOut" method="POST">
-                    <input type="hidden" name="logOut" id="logOutInput" value="yes">
-                    <button type="submit" id="logOut" aria-label="Log out">Log out</button>
-                </form>
             </div>
         </div>
     </header>
 
-    <h1 id="motherNatureH1">Mother Nature Memory Game</h1>
+    <h1 id="motherNatureH1">NicoleCodeGirl Memory Game</h1>
 
     <!--============================================
-                        SELECT PLAYER
+                        ENTER PLAYER NAME
     ==============================================-->
     <div id="playersWrapper">
-            
-        <div id="selectProfileWrapper">
-            <div id="selectProfileBody">
-                <h1 id="selectProfileH1">Select Profile</h1>
-                <% if(users.length > 0) {%>
-                    <% users.forEach(function(user){ %>
-                        <button class="profileNames" aria-label="Select profile <%= user.user_name %>">
-                        <%= user.user_name %>
-                    </button>
-                    <% }) %>
-                <% } else if (users.length == 0) { %>
-                    <h1>There are no player profiles yet!</h1>
-                <% } %>
+        <div id="enterNameWrapper">
+            <div id="enterNameBody">
+                <h1 id="enterNameH1">Enter Your Name</h1>
+                <h2>What's your name, player?</h2>
+                <form id="enterNameForm" name="enterName" action="/startGame" method="POST">
+                    <input type="text" id="playerNameInput" name="playerName" autocomplete="off" required placeholder="Enter your name here..." maxlength="20"/>
+                    <p id="nameRequired">Please enter your name to start playing!</p>
+                </form>
             </div>
-            <div id="selectProfileButtons">
-                <button id="deleteBtn" type="button" aria-label="Delete profile">Delete</button>
-                <button id="selectBtn" type="button" aria-label="Select profile">Select</button>
-                <button id="createBtn" type="button" aria-label="Create profile">Create</button>
+            <div id="enterNameButtons">
+                <button id="startGameBtn" type="button" aria-label="Start Game">Start Game</button>
             </div>
-        </div><!--end selectProfileWrapper-->
-
-        <!--============================================
-                        SELECT PLAYER PLZ
-        ==============================================-->
-        <div id="selectPlayerPlzWrapper">
-                <div id="selectPlayerPlzBody">
-                    <h1 id="selectPlayerPlzH1">Please select a player!</h1>
-                    <img id="playerIcon" src="photos/player_icon.png"/>
-                </div>
-                <div id="">
-                    <button id="okBtn" type="button" aria-label="OK">OK</button>
-                </div>
-            </div><!--end selectPlayerPlzWrapper-->
-
-        <!--============================================
-                        DELETE PLAYER
-        ==============================================-->    
-        <div id="deletePlayerWrapper">
-            <div id="deletePlayerBody">
-                <h1 id="deletePlayerH1">DELETE PLAYER?</h1>
-                <h2>Are you sure you want to delete <span id="deleteName">player</span>?</h2>
-                <h2>This can't be undone.</h2>
-            </div>
-            <div id="deletePlayerButtons">
-                <button id="noDelete" type="button" aria-label="No">No</button>
-                <button id="yesDelete" type="button" aria-label="Yes">Yes</button>
-            </div>
-        </div><!--end deletePlayerWrapper-->
-
-        <!--============================================
-                        CREATE PLAYER
-        ==============================================-->
-        <div id="createPlayerWrapper">
-          <form id="createUserForm" name="createUser" action="/createUser" method="POST">      
-                <div id="createPlayerBody">
-                    <h1 id="createPlayerH1">CREATE NEW PLAYER?</h1>
-                    <h2>Enter your name:</h2>
-                    <input type="text" id="newPlayer" name="newPlayer" autocomplete="off" required/>
-                    <p id="nameTaken">User name already exists in database!</p>
-
-                    <h2>Create Password:</h2>
-                    <input type="password" id="createdPswd" name="createdPswd" required/>
-
-                    <h2>Confirm Password:</h2>
-                    <input type="password" id="confirmPswd" required/>
-                    <p id="warningTxt">Both password entries must match!</p>
-                    <p id="spacesTxt">Do not include spaces, capitals, or symbols</p>
-                    <p id="enterPswdTxt">Please enter a password!</p>
-                </div><!--end createPlayerBody-->
-                <div id="createPlayerButtons">
-                        <button id="cancelCreate" type="button" aria-label="Cancel">Cancel</button>
-                        <input type="submit" id="doneCreate" value="Done"/>
-                </div><!--end createPlayerButtons-->
-               </form> 
-            </div><!--end createPlayerWrapper-->
-             
-            <!--============================================
-                        ENTER PASSWORD
-            ==============================================-->
-            <div id="enterPswdWrapper">
-                <form id="enterPswdForm" name="enterPswd" action="/enterPswd" method="POST">
-                    <div id="enterPswdBody">
-                        <h1 id="enterPswdH1"><span id="yourName" ></span></h1>
-                        <input type="text" id ="yourNamePost" name="yourName" class="hidden-input" />
-                        <h2>Enter password please:</h2>
-                        <input type="password" id="pswdEntered" name="pswdEntered" required/>
-                        <p id="incorrectPswd">Incorrect Password</p>
-                        <div class="hidden">
-                            <input type="text" id="stat" name="pswdStat" style="opacity: 0"/>
-                        </div>
-
-                    </div><!--end enterPswdBodyy-->
-                    <div id="enterPswdButtons">
-                        <button id="pswdCancelBtn" type="button" aria-label="Cancel">Cancel</button>
-                        <input type="submit" id="pswdConfirmBtn" value="Done"/>
-                    </div><!--end enterPswdButton-->
-                </form> 
-            </div><!--end enterPswdWrapper-->   
-
-        <!--============================================
-                        Home popup
-        ==============================================-->
-        <div id="homePopupWrapper">
-            <h1 id="homePopupH1">Please log out to create, select, or delete players!</h1>  
-        </div><!--end homePopupWrapper-->
-
-
-    </div><!--end playersWrapper-->
-
-
-    <!--=============================================================
-                            Hidden 
-             used for creating variabloes from server-side
-    ==============================================================-->
-    <div class = "hidden">
-        <% users.forEach(function(user){ %>
-            <p class="hiddenPswds"> <%= user.pswd %> </p>
-        <% }) %>
+        </div>
     </div>
 
     <script src="js/updateClock.js"></script>

@@ -14,20 +14,13 @@
         <div id="floatRight">
             <h2 id="headerDate"></h2>
             <div id="headerLinks">
-                <form id="gameBoardForm" name="gameBoardForm" action="/backToGame" method="POST">
-                    <input type="text" name="current_user" id="currentUserInput" style="display:none">
-                    <a href="http://localhost:3000/memoryGame"><button id="backToGame">Back to Game</button></a>
-                </form>
-                <a href="http://localhost:3000/"><button id="logIn">Log In</button></a>
-                <form id="logoutForm" name="logOutForm" action="/logOut" method="POST">
-                    <input type="text" name="logOut" id="logOutInput" style="display:none" value="yes">
-                    <button type="submit" id="logOut">Log out</button>
-                </form>
+                <a href="http://localhost:3000/memoryGame"><button id="backToGame">Back to Game</button></a>
+                <a href="http://localhost:3000/"><button id="newPlayer">New Player</button></a>
             </div>
         </div>
     </header>
     
-    <h1 id="motherNatureH1">Mother Nature Memory Game</h1>
+    <h1 id="motherNatureH1">NicoleCodeGirl Memory Game</h1>
 
    
     <div id="leaderBoardWrapper">
@@ -65,7 +58,6 @@
             <label id="filterLabel">Filter scores by:</label>
             <select name="filter_option" id="choose">
                 <option value="all_Players" >All Player Scores</option>
-                <option value="active_Players">Active Player Scores</option>
                 <option value="your_Scores">Only your scores</option>
                 <input id="filterNowBtn" type="submit" value="Filter Now"/>
             </select>

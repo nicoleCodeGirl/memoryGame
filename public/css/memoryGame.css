@@ -12,54 +12,81 @@
 
 /*memory game instructions*/
 #instructions{
-    text-shadow: 2px 2px 2px lightskyblue, -2px -2px 2px lightblue;
+    color: #ff69b4;
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-weight: bold;
 }
 
 #startTimeH4{
-    background-color: azure;
-    color: darkblue;
+    background-color: #111;
+    color: #ff69b4;
     width: 176px;
     margin: 0px auto 5px auto;
     text-align: left;
     padding-left: 10px;
     padding-right: 10px;
+    border: 1px solid #00ff00;
 }
 
 #startTimeSpan{
-    color: red;
+    color: #00ff00;
 }
 
 #newGameBtn{
     margin: 5px;
-    background-color: yellow;
-    border: 1px solid red;
-    box-shadow: 1px 1px 1px 1px rgba(224, 79, 79, 0.705);
+    background: linear-gradient(135deg, #ff69b4, #00ff00);
+    border: 2px solid #ff69b4;
+    color: #111;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
+    transition: all 0.3s ease;
+}
+
+#newGameBtn:hover{
+    background: linear-gradient(135deg, #00ff00, #ff69b4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 255, 0, 0.4);
 }
 
 #gameWrapper{
-    background-color: green;
+    background: linear-gradient(135deg, #111, #1a1a1a);
     height: auto;
     width: 96%;
     margin: auto;
     padding: 5px;
+    border: 2px solid #ff69b4;
+    border-radius: 10px;
 }
 
 .row{
    width: 99%;
    height: 141.5px; 
-   border: 1px solid blue;
-   margin:auto;
+   border: 2px solid #00ff00;
+   margin: auto;
    padding: 3px;
-   background-color: white;
+   background: linear-gradient(135deg, #111, #2a2a2a);
    display: flex;
+   border-radius: 5px;
 }
 
 .card{
    flex:1;
-   border: 1px solid blue;
-   margin:5px;
-   background-color: white;
+   border: 2px solid #ff69b4;
+   margin: 5px;
+   background: linear-gradient(135deg, #111, #1a1a1a);
    display: inline-block;
+   border-radius: 5px;
+   transition: transform 0.3s ease;
+}
+
+.card:hover{
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(255, 105, 180, 0.5);
 }
 
 .cardImg{
@@ -73,18 +100,18 @@
    width: 100%;
    height: 100%; 
    position: relative;
-   background-color: black;
-   background: linear-gradient( to left top , 
-        rgb(3, 79, 29),
-        rgb(50, 128, 67),
-        rgb(230, 72, 170),
-        rgb(155, 43, 112),
-        rgb(3, 79, 29),
-        rgb(50, 128, 67),
-        rgb(230, 72, 170),
-        rgb(237, 167, 210)
+   background: linear-gradient(135deg, 
+        #111,
+        #ff69b4,
+        #00ff00,
+        #8a2be2,
+        #111,
+        #ff69b4,
+        #00ff00,
+        #8a2be2
         );
-   display:block;
+   display: block;
+   border-radius: 3px;
 }
 
 #matchFound,#noMatch, #NewGameH1{
@@ -94,13 +121,16 @@
     left: 30%;
     margin: 5px auto 5px auto;
     font-size: 500%;
-    background: -webkit-linear-gradient(red, blue);
+    background: linear-gradient(135deg, #ff69b4, #00ff00, #8a2be2);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-stroke-color: aqua;
-    -webkit-text-stroke-width:2px;
-    opacity:0;
+}
+
+#matchFound,#noMatch, #NewGameH1{
+    -webkit-text-stroke-color: #00ff00;
+    -webkit-text-stroke-width: 2px;
+    opacity: 0;
     display: none;
 }
 
@@ -114,69 +144,121 @@
 
 #postScorePopUp,
 #leavePagePopUp{
-    background-color:rgb(240, 194, 135);
-    border: 2px solid brown; 
-    width: 48%;
-    height: 48%;
-    margin: 0px auto 0px 32%;
+    background: linear-gradient(135deg, #111, #1a1a1a);
+    border: 3px solid #ff69b4; 
+    width: 70%;
+    height: 60%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: none;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
+    z-index: 1000;
+    padding: 30px;
+    box-sizing: border-box;
 }
 
 
 /*H1's for the divs to post score or leave page*/
 #goodJob,
 #leavePageH1{
-    background-color:brown;
-    border: 1px solid brown;
+    background: linear-gradient(135deg, #ff69b4, #00ff00);
+    border: 2px solid #00ff00;
     margin-top: 0px;
-    color: white;
-    text-shadow:  4px -2px 0px green;
+    color: #111;
+    font-weight: bold;
 }
 
-#postScoreButtons, form{
-    display: inline-flex;
-    width: 80%;
-    height:auto;
+#postScoreButtons, form,
+#leavePageButtons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    flex-wrap: wrap;
 }
 
 #noPost,
 #yesPost, 
 #leavePage, 
 #stayOnPage{
-    background-color:green;
-    color: white;
+    background: linear-gradient(135deg, #ff69b4, #00ff00);
+    color: #111;
+    border: 2px solid #8a2be2;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+#noPost:hover,
+#yesPost:hover, 
+#leavePage:hover, 
+#stayOnPage:hover{
+    background: linear-gradient(135deg, #00ff00, #ff69b4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(138, 43, 226, 0.4);
 }
 
 /*==================
     Buttons
 ====================*/
 #noPost{
-    width: 50%;
-    height: 30%;
+    width: 200px;
+    height: 40px;
+    margin: 10px;
 }
 
 #yesPost{
-    width: 60%;
-    height: 100%;
-    margin-left: 32%;
+    width: 200px;
+    height: 40px;
+    margin: 10px;
 }
 
 #leavePage, 
 #stayOnPage{
-    width: 30%;
-    height: 30%;
+    width: 200px;
+    height: 40px;
+    margin: 10px;
 }
 
 
 #postScoreBody{
-    height: 19rem;
+    height: 20rem;
+    padding: 20px;
+    color: #ff69b4;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-y: auto;
 }
 #leavePageBody{
-    height: 24rem;
-    color:darkblue;
-    text-shadow: 1px 1px 1px white;
+    height: 20rem;
+    padding: 30px;
+    color: #ff69b4;
+    font-size: 18px;
+    line-height: 1.8;
+    overflow-y: auto;
+    text-align: center;
+}
+
+#leavePageBody h1{
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #ff69b4;
+    font-weight: bold;
+}
+
+#leavePageBody h2{
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #00ff00;
+    font-weight: bold;
 }
 
 /*The scrollbar of the browser*/
-::-webkit-scrollbar {width: 9px; height: .5px; background: rgba(241, 190, 197, 0.503); }
-::-webkit-scrollbar-thumb { background-color: rgb(109, 109, 233); border-radius: 1ex; }
+::-webkit-scrollbar {width: 9px; height: .5px; background: rgba(255, 105, 180, 0.3); }
+::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #ff69b4, #00ff00); border-radius: 1ex; }

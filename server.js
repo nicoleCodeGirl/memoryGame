@@ -170,20 +170,10 @@ connection.connect(function(err) {
     /*=====================================
             GET MEMORY HOME PAGE
     ======================================*/
-    app.get("/", async function (req, res) {
-        try {
-            const results = await executeQuery(
-                "SELECT user_name, pswd FROM user_account WHERE active_status = 'active'"
-            );
-            req.app.locals.users = results;
-            res.render("index.ejs", {
-                currentUser: req.app.locals.currentUser,
-                users: results,
-            });
-        } catch (err) {
-            console.error(err);
-            res.status(500).send("Internal Server Error");
-        }
+    app.get("/", function (req, res) {
+        res.render("index.ejs", {
+            currentUser: "Player"
+        });
     });//end app.get "/"
 
     /*=====================================
@@ -193,7 +183,7 @@ connection.connect(function(err) {
         console.log(app.locals.currentUser, "the currentUser when GET memory Game page");
 
         if(app.locals.currentUser == undefined || app.locals.currentUser == "Player" ){
-            res.status(403).sendFile(path.join(__dirname, "/public/noAccess.html"));
+            res.redirect("/");
         }else{
             res.render("memoryGame.ejs", {
                 currentUser: app.locals.currentUser
@@ -210,9 +200,9 @@ connection.connect(function(err) {
 
         function renderPage() {
             res.render("leaderBoard.ejs", {
-                currentUser: app.locals.currentUser,
-                winners: app.locals.winners,
-                filter_default: app.locals.filterOption
+                currentUser: app.locals.currentUser || "Player",
+                winners: app.locals.winners || [],
+                filter_default: app.locals.filterOption || "all_Players"
             });
         }
 
@@ -224,53 +214,80 @@ connection.connect(function(err) {
                 }
                 app.locals.winners = results;
                 console.log(app.locals.winners, "this is the results for the leaderboard");
-          
-                if(app.locals.currentUser == undefined){
-                app.locals.currentUser = "Player";
-            }
-
                 renderPage();
         });//end query selection  
         }else
-        if(app.locals.filterOption == 'active_Players'){
-            connection.query("SELECT  l.game_date, a.user_name, l.game_complete FROM memoryGameDB.leaderboard as l inner join memoryGameDB.user_account as a using(user_name) " +
-             "where active_status='active' order by l.game_complete",
-                function (err, results){
-                if(err){
-                    throw err;
-                }
-                app.locals.winners = results;
-                console.log(app.locals.winners, "this is the results for the leaderboard");
-          
-                if(app.locals.currentUser == undefined){
-                app.locals.currentUser = "Player";
-            }
-
-                renderPage();
-        });//end query selection  
-        }
-        else
-
         if(app.locals.filterOption == 'your_Scores'){
-            connection.query("SELECT  l.game_date, a.user_name, l.game_complete FROM memoryGameDB.leaderboard as l inner join memoryGameDB.user_account as a using(user_name) " +
-            "where user_name=? order by l.game_complete",[app.locals.currentUser],
+            if(app.locals.currentUser && app.locals.currentUser !== "Player"){
+                connection.query("SELECT user_name, game_date, game_complete FROM memoryGameDB.leaderboard " +
+                "where user_name=? order by game_complete",[app.locals.currentUser],
+                    function (err, results){
+                    if(err){
+                        throw err;
+                    }
+                    app.locals.winners = results;
+                    console.log(app.locals.winners, "this is the results for the leaderboard");
+                    console.log(app.locals.currentUser, "the current user when filtering your scores only");
+                    renderPage();
+                });//end query selection  
+            } else {
+                // If no current user, show all scores
+                connection.query("SELECT user_name, game_date, game_complete from memoryGameDB.leaderboard order by game_complete",
+                    function (err, results){
+                    if(err){
+                        throw err;
+                    }
+                    app.locals.winners = results;
+                    app.locals.filterOption = "all_Players";
+                    renderPage();
+                });
+            }
+        } else {
+            // Default to all players
+            connection.query("SELECT user_name, game_date, game_complete from memoryGameDB.leaderboard order by game_complete",
                 function (err, results){
                 if(err){
                     throw err;
                 }
                 app.locals.winners = results;
-                console.log(app.locals.winners, "this is the results for the leaderboard");
-                console.log(app.locals.currentUser, "the current user when filtering your scores only");
-
-                if(app.locals.currentUser == undefined){
-                app.locals.currentUser = "Player";
-            }
-
+                app.locals.filterOption = "all_Players";
                 renderPage();
-            });//end query selection  
-        }//end else if
+            });
+        }
 
     });//end app.get "/leaderBoard"
+
+    /*=====================================
+         GET AVAILABLE PHOTOS
+    ======================================*/
+    app.get("/api/photos", function(req, res) {
+        const fs = require('fs');
+        const gameCardsDir = path.join(__dirname, 'public', 'photos', 'gameCards');
+        
+        fs.readdir(gameCardsDir, (err, files) => {
+            if (err) {
+                console.error("Error reading gameCards directory:", err);
+                return res.status(500).json({ error: "Failed to load photos" });
+            }
+            
+            // Filter for image files - any image file is valid for the game
+            const imageFiles = files.filter(file => {
+                const ext = path.extname(file).toLowerCase();
+                return ['.jpg', '.jpeg', '.png', '.gif', '.webp'].includes(ext);
+            });
+            
+            // Create photo objects with metadata
+            const photos = imageFiles.map(file => ({
+                filename: file,
+                path: `/photos/gameCards/${file}`,
+                name: path.parse(file).name
+            }));
+            
+            res.json(photos);
+        });
+    });//end app.get "/api/photos"
+
+
 
     /*=====================================
             SEND TO ERROR 403 PAGE
@@ -280,53 +297,23 @@ connection.connect(function(err) {
     });//end app.get "/public"
 
     /*=====================================
-            CREATE USER
+            START GAME
     ======================================*/
-    app.post("/createUser", function(req, res) {
-        let createUser = req.body;
-        let createdPswd = createUser.createdPswd;
-        let newPlayer = createUser.newPlayer;
-
-        connection.query(
-            "INSERT INTO user_account (user_name, pswd, active_status) VALUES (?, ?, 'active')",
-            [newPlayer, createdPswd],
-            function (err, info) {
-                if (err) {
-                    console.error("Error creating user:", err.message);
-                    return res.status(500).send("Error creating user");
-                }
-                console.log(info.affectedRows, "affected rows for inserting created user into user_account");
-                res.redirect(getBaseUrl(req) + "/");
-            }
-        );
-    });//end app.post "/createUser"
-
-    /*=====================================
-        PSWD STATUS - DELETE OR PLAY
-    ======================================*/
-    app.post("/enterPswd", function(req, res) {
-        app.locals.status = req.body;
-        console.log(app.locals.status, "req.body in the enterPswd POST method");
-
-        if (app.locals.status.pswdStat === "delete") {
-            connection.query(
-                "UPDATE user_account SET active_status = 'inactive' WHERE pswd = ? AND user_name = ?",
-                [app.locals.status.pswdEntered, app.locals.status.yourName],
-                function (err, results) {
-                    if (err) {
-                        console.error("Error updating user status:", err.message);
-                        return res.status(500).send("Error updating user status");
-                    }
-                    console.log(results, "UPDATE WITH INACTIVE STATUS OK");
-                    res.redirect(getBaseUrl(req) + "/");
-                }
-            );
-        } else if (app.locals.status.pswdStat === "play") {
-            app.locals.currentUser = app.locals.status.yourName;
-            console.log(app.locals.currentUser, "CURRENT USER");
-            res.redirect(getBaseUrl(req) + "/memoryGame");
+    app.post("/startGame", function(req, res) {
+        let playerName = req.body.playerName;
+        
+        if (!playerName || playerName.trim() === "") {
+            return res.redirect("/");
         }
-    });//end app.post "/enterPswd"
+        
+        // Store the player name in session
+        app.locals.currentUser = playerName.trim();
+        
+        console.log("Starting game for player:", playerName);
+        res.redirect(getBaseUrl(req) + "/memoryGame");
+    });//end app.post "/startGame"
+
+
 
     /*=====================================
          POST SCORE
@@ -334,9 +321,12 @@ connection.connect(function(err) {
     app.post('/postScore', function(req, res) {
         console.log(req.body, "req.body in the POST postScore");
 
+        // Use the current session player name if not provided
+        let playerName = req.body.player_name || app.locals.currentUser || "Anonymous";
+
         connection.query(
             "INSERT INTO leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?, ?, ?, ?, ?)",
-            [req.body.player_name, req.body.date_played, req.body.time_start, req.body.time_end, req.body.total_time],
+            [playerName, req.body.date_played, req.body.time_start, req.body.time_end, req.body.total_time],
             function (err, results) {
                 if (err) {
                     console.error("Error posting score:", err.message);
@@ -357,39 +347,17 @@ connection.connect(function(err) {
        
         if(choose.filter_option == 'all_Players'){
             app.locals.filterOption = "all_Players";
-        }else 
- 
-        if(choose.filter_option == 'active_Players'){
-            app.locals.filterOption = "active_Players";
-        }else
-
-        if(choose.filter_option == 'your_Scores'){
+        }else if(choose.filter_option == 'your_Scores'){
             app.locals.filterOption = "your_Scores";
+        } else {
+            app.locals.filterOption = "all_Players";
         }
 
         res.redirect(getBaseUrl(req) + "/leaderBoard");
 
     });//end app.post leaderboard filtering
 
-    /*=====================================
-         LOG OUT
-    ======================================*/
-    app.post("/logOut", function(req, res) {
-        if (req.body.logOut === "yes") {
-            app.locals.currentUser = "Player";
-        }
-        console.log(req.body, "this is the log out status");
-        res.redirect(getBaseUrl(req) + "/");
-    });//end app.post "/logOut"
 
-    /*=====================================
-            BACK TO GAME
-    ======================================*/
-    app.post("/backToGame", function(req, res) {
-        app.locals.currentUser = req.body.current_user;
-        console.log(req.body, "this is the backtogame status");
-        res.redirect(getBaseUrl(req) + "/memoryGame");
-    });//end app.post "/backToGame"
 
     /*=====================================
             SEND TO ERROR 404 PAGE
