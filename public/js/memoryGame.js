@@ -7,6 +7,7 @@ let randomImgs=[];
 let startTimeSpan = document.getElementById("startTimeSpan");//the time shown to the user when clicking the first card
 let cardCount;
 let matchCount;
+let gameInitialized = false; // Flag to prevent multiple initializations
 
 // Function to load photos dynamically from server
 async function loadPhotos() {
@@ -41,8 +42,8 @@ async function loadPhotos() {
         imgSrc = photos.map(photo => photo.path);
         console.log(`Loaded ${imgSrc.length} photos successfully`);
         
-        // Initialize the game with the loaded photos
-        initializeGame();
+        // Randomize cards with the loaded photos
+        randomizeCards();
         
     } catch (error) {
         console.error('Error loading photos:', error);
@@ -122,7 +123,7 @@ function useFallbackImages() {
     });
     
     console.log(`Created ${imgSrc.length} fallback cards`);
-    initializeGame();
+    randomizeCards();
 }
 
 function createCard(imgSrc, index) {
@@ -257,6 +258,7 @@ function randomizeCards() {
                     
                     // Set the image source
                     cardImg.setAttribute("src", selectedPhoto);
+                    console.log(`Setting image ${i} to: ${selectedPhoto}`);
                     
                     // Add error handling for image loading
                     cardImg.onerror = function() {
@@ -268,7 +270,13 @@ function randomizeCards() {
                     
                     cardImg.onload = function() {
                         console.log(`Successfully loaded image: ${selectedPhoto}`);
+                        // Keep image hidden until card is clicked
+                        this.style.display = 'none';
                     };
+                    
+                    // Ensure image is hidden initially
+                    cardImg.style.display = 'none';
+                    cardBack.style.display = 'block';
                 }
             } else {
                 console.warn(`No more photos available for card ${i}`);
@@ -281,8 +289,36 @@ function randomizeCards() {
     console.log(`Game randomized with ${randomImgs.length} cards`);
 }//end function randomizeCards
 
+// Reset game state for new game
+function resetGame() {
+    gameInitialized = false;
+    cardCount = 0;
+    matchCount = 0;
+    cardChoice = [];
+    startTimeSpan.innerHTML = "";
+    randomImgs = [];
+    
+    // Reset all cards to show backs
+    for(let i = 0; i < card.length; i++){
+        const cardImg = card[i].querySelector('.cardImg');
+        const cardBack = card[i].querySelector('.card_back');
+        if (cardImg && cardBack) {
+            cardImg.style.display = 'none';
+            cardBack.style.display = 'block';
+        }
+    }
+    
+    // Reinitialize the game
+    initializeGame();
+}
+
 // Initialize the game by loading photos first
 function initializeGame() {
+    if (gameInitialized) {
+        console.log('Game already initialized, skipping...');
+        return;
+    }
+    
     console.log('Initializing game...');
     console.log('Card elements found:', card.length);
     
@@ -292,6 +328,7 @@ function initializeGame() {
         return;
     }
     
+    gameInitialized = true;
     loadPhotos();
 }
 
@@ -333,13 +370,25 @@ for(let i = 0; i < card.length; i++){
             player_name.value= playerName.innerHTML;
         }//end if cardCount 
 
-        card_back = this.lastChild;
-        card_front = this.firstChild;
-        card_front.style.display = 'block';//the card
-        card_back.style.display = 'none';//the back of card 
-        cardChoice.push(card_front);
+        // Get the card elements properly
+        const cardImg = this.querySelector('.cardImg');
+        const cardBack = this.querySelector('.card_back');
+        
+        if (!cardImg || !cardBack) {
+            console.error('Card elements not found:', { cardImg, cardBack });
+            return;
+        }
+        
+        // Show the image, hide the back
+        cardImg.style.display = 'block';
+        cardBack.style.display = 'none';
+        
+        console.log('Card clicked, showing image:', cardImg.src);
+        cardChoice.push(cardImg);
 
         if(cardChoice.length == 2){
+            console.log('Comparing cards:', cardChoice[0].src, cardChoice[1].src);
+            
             if(cardChoice[0].getAttribute("src") == cardChoice[1].getAttribute("src")){//if cards match
                 matchCount++;
                 console.log(matchCount, "this is the match counter");
@@ -499,8 +548,8 @@ let NewGameH1 = document.getElementById("NewGameH1");
         { opacity: 0.25, transform: 'translateY(-60px) scale(1.25)'},
         { opacity: 0, transform: 'translateY(-70px) scale(1)'} ], 1000);
 
-    // Simply randomize the cards with the original photo set
-    randomizeCards();
+    // Reset and reinitialize the game
+    resetGame();
     
     function H1displayNone (){
       NewGameH1.style.display = 'none';  

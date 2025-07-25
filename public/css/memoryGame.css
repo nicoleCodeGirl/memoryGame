@@ -94,6 +94,9 @@
     height: 100%; 
     position: relative;
     z-index: 300;
+    object-fit: cover;
+    border-radius: 3px;
+    display: block;
 }
 
 .card_back{

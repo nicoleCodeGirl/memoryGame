@@ -154,17 +154,6 @@ connection.connect(function(err) {
         });
     });
 
-    // Handle 404 errors
-    app.use(function(req, res) {
-        console.log("404 - Page not found:", req.url);
-        res.status(404).json({
-            error: "Page not found",
-            message: "The requested page could not be found",
-            url: req.url,
-            timestamp: new Date().toISOString()
-        });
-    });//end error 404
-
     // Replace hardcoded URLs with dynamic URLs
     const getBaseUrl = (req) => `${req.protocol}://${req.get('host')}`;
 
