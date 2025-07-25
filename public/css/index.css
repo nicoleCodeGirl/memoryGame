@@ -41,6 +41,9 @@ the one to select a profile*/
     display:none;
 }
 
+.hidden-input {
+    display: none;
+}
 
 #selectProfileBody,
 #selectPlayerPlzBody,

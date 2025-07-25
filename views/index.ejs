@@ -6,7 +6,6 @@
     <title>Home</title>
     <link rel="stylesheet" href="css/header.css"/>
     <link rel="stylesheet" href="css/index.css"/>
-
 </head>
 <body>
     <header>
@@ -18,7 +17,7 @@
                     <input type="hidden" name="current_user" id="currentUserInput">
                     <button id="backToGame" type="submit" aria-label="Back to Game">Back to Game</button>
                 </form>
-                <a href="http://localhost:3000/leaderBoard">
+                <a href="/leaderBoard">
                     <button id="goToLeaderBoard" type="button" aria-label="Go to Leaderboard">Leaderboard</button>
                 </a>
                 <form id="logoutForm" name="logOutForm" action="/logOut" method="POST">
@@ -118,7 +117,7 @@
                 <form id="enterPswdForm" name="enterPswd" action="/enterPswd" method="POST">
                     <div id="enterPswdBody">
                         <h1 id="enterPswdH1"><span id="yourName" ></span></h1>
-                        <input type="text" id ="yourNamePost" name="yourName" style="display:none"/>
+                        <input type="text" id ="yourNamePost" name="yourName" class="hidden-input" />
                         <h2>Enter password please:</h2>
                         <input type="password" id="pswdEntered" name="pswdEntered" required/>
                         <p id="incorrectPswd">Incorrect Password</p>

@@ -1,4 +1,6 @@
-require("dotenv").config(); // Load environment variables
+if (process.env.NODE_ENV !== 'production') {
+    require("dotenv").config(); // Load environment variables
+}
 
 /*=====================================
         Dependencies
@@ -41,14 +43,15 @@ connection.connect(function(err) {
     }
     console.log("Connected as id " + connection.threadId);
 
-    // Refactor repetitive queries into reusable functions
-    const executeQuery = (query, params = []) => {
-        return new Promise((resolve, reject) => {
-            connection.query(query, params, (err, results) => {
-                if (err) return reject(err);
-                resolve(results);
-            });
-        });
+    // Extract reusable query function
+    const executeQuery = async (query, params = []) => {
+        try {
+            const [results] = await connection.promise().query(query, params);
+            return results;
+        } catch (err) {
+            console.error("Database query error:", err.message);
+            throw err;
+        }
     };
 
     // Use async/await for better readability
@@ -169,7 +172,7 @@ connection.connect(function(err) {
     ======================================*/
     app.get("/", async function (req, res) {
         try {
-            const [results] = await connection.promise().query(
+            const results = await executeQuery(
                 "SELECT user_name, pswd FROM user_account WHERE active_status = 'active'"
             );
             req.app.locals.users = results;
