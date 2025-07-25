@@ -11,77 +11,173 @@ let matchCount;
 // Function to load photos dynamically from server
 async function loadPhotos() {
     try {
-        console.log('Loading photos from API...');
-        
         const response = await fetch('/api/photos');
+        
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            const errorData = await response.json();
+            console.error('Photo loading error:', errorData);
+            
+            if (response.status === 404) {
+                showError('No game cards found. Please add images to the gameCards folder.');
+            } else {
+                showError(`Failed to load photos: ${errorData.message || 'Unknown error'}`);
+            }
+            
+            // Use fallback images
+            useFallbackImages();
+            return;
         }
         
         const photos = await response.json();
         
-        if (photos.error) {
-            console.error('Failed to load photos:', photos.error);
-            console.log('Attempting to use fallback images...');
+        if (!photos || photos.length === 0) {
+            console.warn('No photos returned from API');
+            showError('No game cards available. Using fallback images.');
             useFallbackImages();
             return;
         }
         
-        if (photos.length === 0) {
-            console.log('No photos found in API, using fallback images...');
-            useFallbackImages();
-            return;
-        }
+        // Convert photos to the format expected by the game
+        imgSrc = photos.map(photo => photo.path);
+        console.log(`Loaded ${imgSrc.length} photos successfully`);
         
-        // Create array of photo paths, duplicated for pairs
-        imgSrc = [];
-        photos.forEach(photo => {
-            imgSrc.push(photo.path); // First instance
-            imgSrc.push(photo.path); // Second instance for matching
-        });
+        // Initialize the game with the loaded photos
+        initializeGame();
         
-        console.log(`Loaded ${photos.length} unique photos, ${imgSrc.length} total cards`);
-        
-        // Initialize the game after photos are loaded
-        randomizeCards();
     } catch (error) {
         console.error('Error loading photos:', error);
-        console.log('Attempting to use fallback images...');
+        showError('Failed to load game cards. Using fallback images.');
         useFallbackImages();
     }
 }
 
 function showError(message) {
-    const gameWrapper = document.getElementById('gameWrapper');
-    if (gameWrapper) {
-        gameWrapper.innerHTML = `<div style="text-align: center; padding: 20px; color: #ff69b4; font-size: 16px;">${message}</div>`;
-    }
     console.error('Game Error:', message);
+    
+    // Create a more user-friendly error display
+    const errorDiv = document.createElement('div');
+    errorDiv.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(135deg, #ff69b4, #00ff00);
+        color: #111;
+        padding: 20px;
+        border-radius: 10px;
+        border: 2px solid #8a2be2;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        z-index: 10000;
+        max-width: 400px;
+        text-align: center;
+        font-weight: bold;
+    `;
+    errorDiv.innerHTML = `
+        <h3>⚠️ Game Notice</h3>
+        <p>${message}</p>
+        <button onclick="this.parentElement.remove()" style="
+            background: linear-gradient(135deg, #00ff00, #ff69b4);
+            color: #111;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        ">OK</button>
+    `;
+    
+    document.body.appendChild(errorDiv);
+    
+    // Auto-remove after 10 seconds
+    setTimeout(() => {
+        if (errorDiv.parentElement) {
+            errorDiv.remove();
+        }
+    }, 10000);
 }
 
-// Fallback function to use default images if API fails
 function useFallbackImages() {
-    console.log('Using fallback images');
-    const defaultImages = [
-        '/photos/gameCards/img1.jpeg',
-        '/photos/gameCards/img2.jpg',
-        '/photos/gameCards/img3.jpeg',
-        '/photos/gameCards/img4.jpg',
-        '/photos/gameCards/img5.jpeg',
-        '/photos/gameCards/img6.jpeg',
-        '/photos/gameCards/img7.jpeg',
-        '/photos/gameCards/img8.jpg',
-        '/photos/gameCards/img9.jpeg',
-        '/photos/gameCards/img10.jpeg'
+    console.log('Using fallback images...');
+    
+    // Create a simple set of fallback images using CSS gradients
+    imgSrc = [];
+    const fallbackColors = [
+        'linear-gradient(45deg, #ff69b4, #00ff00)',
+        'linear-gradient(45deg, #00ff00, #8a2be2)',
+        'linear-gradient(45deg, #8a2be2, #ff69b4)',
+        'linear-gradient(45deg, #ff69b4, #0000ff)',
+        'linear-gradient(45deg, #0000ff, #00ff00)',
+        'linear-gradient(45deg, #00ff00, #ff69b4)',
+        'linear-gradient(45deg, #8a2be2, #00ff00)',
+        'linear-gradient(45deg, #ff69b4, #8a2be2)',
+        'linear-gradient(45deg, #00ff00, #0000ff)',
+        'linear-gradient(45deg, #0000ff, #8a2be2)'
     ];
     
-    imgSrc = [];
-    defaultImages.forEach(img => {
-        imgSrc.push(img); // First instance
-        imgSrc.push(img); // Second instance for matching
+    // Create pairs of fallback images
+    fallbackColors.forEach((color, index) => {
+        imgSrc.push(`fallback-${index}`);
+        imgSrc.push(`fallback-${index}`);
     });
     
-    randomizeCards();
+    console.log(`Created ${imgSrc.length} fallback cards`);
+    initializeGame();
+}
+
+function createCard(imgSrc, index) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.index = index;
+    
+    const cardFront = document.createElement('div');
+    cardFront.className = 'card_front';
+    
+    const cardBack = document.createElement('div');
+    cardBack.className = 'card_back';
+    
+    // Handle fallback images vs real images
+    if (imgSrc.startsWith('fallback-')) {
+        const fallbackIndex = parseInt(imgSrc.split('-')[1]);
+        const fallbackColors = [
+            'linear-gradient(45deg, #ff69b4, #00ff00)',
+            'linear-gradient(45deg, #00ff00, #8a2be2)',
+            'linear-gradient(45deg, #8a2be2, #ff69b4)',
+            'linear-gradient(45deg, #ff69b4, #0000ff)',
+            'linear-gradient(45deg, #0000ff, #00ff00)',
+            'linear-gradient(45deg, #00ff00, #ff69b4)',
+            'linear-gradient(45deg, #8a2be2, #00ff00)',
+            'linear-gradient(45deg, #ff69b4, #8a2be2)',
+            'linear-gradient(45deg, #00ff00, #0000ff)',
+            'linear-gradient(45deg, #0000ff, #8a2be2)'
+        ];
+        
+        cardFront.style.background = fallbackColors[fallbackIndex] || fallbackColors[0];
+        cardFront.innerHTML = `<span style="color: #111; font-weight: bold; font-size: 24px;">🎴</span>`;
+    } else {
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = `Card ${index + 1}`;
+        
+        // Add error handling for image loading
+        img.onerror = function() {
+            console.error(`Failed to load image: ${imgSrc}`);
+            this.style.display = 'none';
+            this.parentElement.style.background = 'linear-gradient(45deg, #ff69b4, #00ff00)';
+            this.parentElement.innerHTML = '<span style="color: #111; font-weight: bold;">❌</span>';
+        };
+        
+        img.onload = function() {
+            console.log(`Successfully loaded image: ${imgSrc}`);
+        };
+        
+        cardFront.appendChild(img);
+    }
+    
+    card.appendChild(cardFront);
+    card.appendChild(cardBack);
+    
+    return card;
 }
 
 /*===============================================
@@ -102,20 +198,83 @@ function randomizeCards() {
     // Create a copy of the original photos array to avoid modifying it
     let availablePhotos = [...imgSrc];
     
+    // Create pairs of images for matching
+    let pairedPhotos = [];
+    availablePhotos.forEach(photo => {
+        pairedPhotos.push(photo); // First instance
+        pairedPhotos.push(photo); // Second instance for matching
+    });
+    
+    // Shuffle the paired photos
+    for (let i = pairedPhotos.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pairedPhotos[i], pairedPhotos[j]] = [pairedPhotos[j], pairedPhotos[i]];
+    }
+    
     for(let i = 0; i < card.length; i++){
-        if (card[i].firstChild && card[i].lastChild) {
-            card[i].firstChild.style.display = "none"; // all the front of cards don't display
-            card[i].lastChild.style.display = "block"; // all the backs of the cards display
+        try {
+            const cardImg = card[i].querySelector('.cardImg');
+            const cardBack = card[i].querySelector('.card_back');
             
-            if(availablePhotos.length > 0){
-                // Get a random index from the remaining photos
-                let randomIndex = Math.floor(Math.random() * availablePhotos.length);
-                let selectedPhoto = availablePhotos.splice(randomIndex, 1)[0];
-                randomImgs.push(selectedPhoto);
-                card[i].firstChild.setAttribute("src", selectedPhoto); // set card attribute to that image
+            if (!cardImg || !cardBack) {
+                console.error(`Card ${i} missing required elements`);
+                continue;
             }
-        } else {
-            console.error(`Card ${i} missing child elements`);
+            
+            // Reset card state
+            cardImg.style.display = "none"; // hide the front
+            cardBack.style.display = "block"; // show the back
+            
+            if(pairedPhotos.length > 0){
+                // Get a random photo for this card
+                let randomIndex = Math.floor(Math.random() * pairedPhotos.length);
+                let selectedPhoto = pairedPhotos.splice(randomIndex, 1)[0];
+                randomImgs.push(selectedPhoto);
+                
+                // Handle fallback images vs real images
+                if (selectedPhoto.startsWith('fallback-')) {
+                    const fallbackIndex = parseInt(selectedPhoto.split('-')[1]);
+                    const fallbackColors = [
+                        'linear-gradient(45deg, #ff69b4, #00ff00)',
+                        'linear-gradient(45deg, #00ff00, #8a2be2)',
+                        'linear-gradient(45deg, #8a2be2, #ff69b4)',
+                        'linear-gradient(45deg, #ff69b4, #0000ff)',
+                        'linear-gradient(45deg, #0000ff, #00ff00)',
+                        'linear-gradient(45deg, #00ff00, #ff69b4)',
+                        'linear-gradient(45deg, #8a2be2, #00ff00)',
+                        'linear-gradient(45deg, #ff69b4, #8a2be2)',
+                        'linear-gradient(45deg, #00ff00, #0000ff)',
+                        'linear-gradient(45deg, #0000ff, #8a2be2)'
+                    ];
+                    
+                    cardImg.style.background = fallbackColors[fallbackIndex] || fallbackColors[0];
+                    cardImg.innerHTML = `<span style="color: #111; font-weight: bold; font-size: 24px;">🎴</span>`;
+                    cardImg.setAttribute("src", selectedPhoto); // Store the fallback ID
+                } else {
+                    // Clear any previous styling
+                    cardImg.style.background = '';
+                    cardImg.innerHTML = '';
+                    
+                    // Set the image source
+                    cardImg.setAttribute("src", selectedPhoto);
+                    
+                    // Add error handling for image loading
+                    cardImg.onerror = function() {
+                        console.error(`Failed to load image: ${selectedPhoto}`);
+                        this.style.display = 'none';
+                        this.parentElement.style.background = 'linear-gradient(45deg, #ff69b4, #00ff00)';
+                        this.parentElement.innerHTML = '<span style="color: #111; font-weight: bold;">❌</span>';
+                    };
+                    
+                    cardImg.onload = function() {
+                        console.log(`Successfully loaded image: ${selectedPhoto}`);
+                    };
+                }
+            } else {
+                console.warn(`No more photos available for card ${i}`);
+            }
+        } catch (error) {
+            console.error(`Error setting up card ${i}:`, error);
         }
     }
     
