@@ -9,6 +9,52 @@ let cardCount;
 let matchCount;
 let gameInitialized = false; // Flag to prevent multiple initializations
 
+/*===============================================
+       Sound Effects System
+===============================================*/
+let sounds = {
+    flip: null,
+    match: null,
+    win: null,
+    shuffle: null
+};
+
+// Initialize sound effects
+function initSounds() {
+    try {
+        sounds.flip = new Audio('/sounds/card-flip.mp3');
+        sounds.match = new Audio('/sounds/match.mp3');
+        sounds.win = new Audio('/sounds/win.mp3');
+        sounds.shuffle = new Audio('/sounds/shuffle.mp3');
+        
+        // Preload sounds
+        Object.values(sounds).forEach(sound => {
+            if (sound) {
+                sound.load();
+                sound.volume = 0.3; // Set volume to 30%
+            }
+        });
+        
+        console.log('Sound effects initialized');
+    } catch (error) {
+        console.warn('Sound effects could not be loaded:', error);
+    }
+}
+
+// Play sound effect
+function playSound(soundName) {
+    try {
+        if (sounds[soundName] && sounds[soundName].readyState >= 2) {
+            sounds[soundName].currentTime = 0; // Reset to beginning
+            sounds[soundName].play().catch(error => {
+                console.warn(`Could not play ${soundName} sound:`, error);
+            });
+        }
+    } catch (error) {
+        console.warn(`Error playing ${soundName} sound:`, error);
+    }
+}
+
 // Function to load photos dynamically from server
 async function loadPhotos() {
     try {
@@ -193,6 +239,9 @@ function randomizeCards() {
     // Reset game state
     cardCount = 0;
     matchCount = 0;
+    cardChoice = [];
+    matchedCards = []; // Reset matched cards
+    flippedCards = []; // Reset flipped cards
     startTimeSpan.innerHTML = "";
     randomImgs = [];
     
@@ -287,6 +336,9 @@ function randomizeCards() {
     }
     
     console.log(`Game randomized with ${randomImgs.length} cards`);
+    
+    // Play shuffle sound
+    playSound('shuffle');
 }//end function randomizeCards
 
 // Reset game state for new game
@@ -295,6 +347,8 @@ function resetGame() {
     cardCount = 0;
     matchCount = 0;
     cardChoice = [];
+    matchedCards = []; // Reset matched cards
+    flippedCards = []; // Reset flipped cards
     startTimeSpan.innerHTML = "";
     randomImgs = [];
     
@@ -329,6 +383,7 @@ function initializeGame() {
     }
     
     gameInitialized = true;
+    initSounds(); // Initialize sound effects
     loadPhotos();
 }
 
@@ -345,6 +400,8 @@ document.addEventListener('DOMContentLoaded', function() {
 let card_back;
 let card_front;
 let cardChoice=[];
+let matchedCards = []; // Track matched cards
+let flippedCards = []; // Track currently flipped cards
 let postScorePopUp = document.getElementById("postScorePopUp");
 let time_start = document.getElementById("time_start");
 let time_end = document.getElementById("time_end");
@@ -360,6 +417,33 @@ let timeStart;
 
 for(let i = 0; i < card.length; i++){
     card[i].addEventListener('click' , function () {
+        // Get the card elements properly
+        const cardImg = this.querySelector('.cardImg');
+        const cardBack = this.querySelector('.card_back');
+        
+        if (!cardImg || !cardBack) {
+            console.error('Card elements not found:', { cardImg, cardBack });
+            return;
+        }
+        
+        // Check if card is already matched
+        if (matchedCards.includes(cardImg)) {
+            console.log('Card already matched, ignoring click');
+            return;
+        }
+        
+        // Check if card is already flipped
+        if (flippedCards.includes(cardImg)) {
+            console.log('Card already flipped, ignoring click');
+            return;
+        }
+        
+        // Check if this is the same card as the first choice
+        if (cardChoice.length === 1 && cardChoice[0] === cardImg) {
+            console.log('Same card clicked twice, ignoring');
+            return;
+        }
+        
         cardCount++;
 
         console.log(cardCount , "this is the card count when clicking cards");
@@ -370,18 +454,15 @@ for(let i = 0; i < card.length; i++){
             player_name.value= playerName.innerHTML;
         }//end if cardCount 
 
-        // Get the card elements properly
-        const cardImg = this.querySelector('.cardImg');
-        const cardBack = this.querySelector('.card_back');
-        
-        if (!cardImg || !cardBack) {
-            console.error('Card elements not found:', { cardImg, cardBack });
-            return;
-        }
-        
         // Show the image, hide the back
         cardImg.style.display = 'block';
         cardBack.style.display = 'none';
+        
+        // Add to flipped cards
+        flippedCards.push(cardImg);
+        
+        // Play flip sound
+        playSound('flip');
         
         console.log('Card clicked, showing image:', cardImg.src);
         cardChoice.push(cardImg);
@@ -392,6 +473,16 @@ for(let i = 0; i < card.length; i++){
             if(cardChoice[0].getAttribute("src") == cardChoice[1].getAttribute("src")){//if cards match
                 matchCount++;
                 console.log(matchCount, "this is the match counter");
+
+                // Add both cards to matched cards
+                matchedCards.push(cardChoice[0]);
+                matchedCards.push(cardChoice[1]);
+                
+                // Remove from flipped cards
+                flippedCards = flippedCards.filter(card => card !== cardChoice[0] && card !== cardChoice[1]);
+                
+                // Play match sound
+                playSound('match');
 
                 document.getElementById("matchFound").style.display = 'block';
                 cardChoice=[];
@@ -423,6 +514,9 @@ for(let i = 0; i < card.length; i++){
                     total_time.value = totalTime;
                     date_played.value = timeEnd.toLocaleDateString();//example: 11/25/2019
                     timeSpan.innerHTML = totalTime + " seconds";
+                    
+                    // Play win sound
+                    playSound('win');
 
                     setTimeout(function () {
                       hideGame.style.display="none";
@@ -457,6 +551,10 @@ for(let i = 0; i < card.length; i++){
                     unMatchedCards[1].style.display = 'none';
                     unMatchedCards[0].parentNode.lastChild.style.display = 'block';
                     unMatchedCards[1].parentNode.lastChild.style.display = 'block';
+                    
+                    // Remove from flipped cards
+                    flippedCards = flippedCards.filter(card => card !== unMatchedCards[0] && card !== unMatchedCards[1]);
+                    
                     unMatchedCards=[];
                 }//end function noMatch
                 
@@ -517,7 +615,7 @@ goToLeaderBoard.addEventListener('click', function (e) {
 let leavePage = document.getElementById('leavePage');
 
 leavePage.addEventListener('click', function() {
-    window.location = "http://localhost:3000/leaderBoard";
+            window.location = "leaderBoard";
 });
 
 let stayOnPage = document.getElementById('stayOnPage');

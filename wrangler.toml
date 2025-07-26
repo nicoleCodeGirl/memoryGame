@@ -1,0 +1,21 @@
+name = "memory-game"
+compatibility_date = "2024-01-01"
+
+[build]
+command = "npm run build"
+
+[env.production]
+name = "memory-game-production"
+
+[env.staging]
+name = "memory-game-staging"
+
+[[redirects]]
+from = "/memory-game/*"
+to = "/index.html"
+status = 200
+
+[[redirects]]
+from = "/api/*"
+to = "/api/:splat"
+status = 200 

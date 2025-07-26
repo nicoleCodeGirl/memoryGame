@@ -12,25 +12,26 @@
     
     <header>
         <h3 id="playerWelcome">Welcome <span id="playerName"><%= currentUser %></span>!</h3>
+        <h1 id="gameTitle">NicoleCodeGirl Memory Game</h1>
         <div id="floatRight">
             <h2 id="headerDate"></h2>
             <div id="headerLinks">
-                <a href="http://localhost:3000/leaderBoard"><button id="goToLeaderBoard">Leaderboard</button></a>
-                <a href="/"><button id="newPlayer">New Player</button></a>
+                <h4 id="startTimeH4">Start Time: <span id="startTimeSpan"></span></h4>
+                <button id="newGameBtn">New Game</button>
+                                        <a href="leaderBoard"><button id="goToLeaderBoard">Leaderboard</button></a>
+                                        <a href="../"><button id="newPlayer">New Player</button></a>
             </div>
         </div>
     </header>
 
-    <h1 id="motherNatureH1">NicoleCodeGirl Memory Game</h1>
-
     <div id="hideGame">
         <div id="playGameWrapper">
-            <h2 id="instructions">Instructions: find the matches to each image you turn over</h2>
-            <h4 id="startTimeH4">Start Time: <span id="startTimeSpan"></span></h4>
-            <button id="newGameBtn">New Game</button>
-    
+            <h2 id="instructions">Match the cards to get to know Nicole!</h2>
+            
             <div id="gameWrapper">
                 <div class="row">
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
                     <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
                     <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
                     <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
@@ -42,6 +43,8 @@
                 </div>
 
                 <div class="row">
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
                     <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
                     <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
                     <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
@@ -61,20 +64,13 @@
                     <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
                     <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
                     <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
-                </div>
-
-                <div class="row">
-                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
-                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
-                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
-                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
-                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
-                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
                     <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
                     <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
                 </div>
 
                 <div class="row">
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
+                    <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
                     <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
                     <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>
                     <div class="card"><img class="cardImg" src=""/><div class="card_back"></div></div>

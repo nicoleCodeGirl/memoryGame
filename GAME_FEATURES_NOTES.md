@@ -13,7 +13,6 @@
 ---
 
 ## 🎮 **Game Feature Suggestions**
-
 ### 1. **Difficulty Levels**
 ```javascript
 const difficulties = {

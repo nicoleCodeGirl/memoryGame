@@ -13,6 +13,9 @@ var mysql = require("mysql2");
 var app = express();
 var PORT = 3000;
 
+// Add base path support for subdirectory deployment
+const BASE_PATH = process.env.BASE_PATH || '';
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -133,7 +136,7 @@ connection.connect(function(err) {
         next();
     });
 
-    app.use(express.static("./public"));
+    app.use(BASE_PATH + '/', express.static("./public"));
 
     /*=====================================
         Error Handling Middleware
@@ -160,7 +163,7 @@ connection.connect(function(err) {
     /*=====================================
             GET MEMORY HOME PAGE
     ======================================*/
-    app.get("/", function (req, res) {
+    app.get(BASE_PATH + "/", function (req, res) {
         res.render("index.ejs", {
             currentUser: "Player"
         });
@@ -169,7 +172,7 @@ connection.connect(function(err) {
     /*=====================================
             GET MEMORY GAME PAGE
     ======================================*/
-    app.get("/memoryGame", function(req, res) {
+    app.get(BASE_PATH + "/memoryGame", function(req, res) {
         console.log(app.locals.currentUser, "the currentUser when GET memory Game page");
 
         if(app.locals.currentUser == undefined || app.locals.currentUser == "Player" ){
@@ -184,7 +187,7 @@ connection.connect(function(err) {
     /*=====================================
             GET LEADERBOARD PAGE
     ======================================*/
-    app.get("/leaderBoard", function(req, res) {
+    app.get(BASE_PATH + "/leaderBoard", function(req, res) {
         console.log(app.locals.filterOption, 'filter options on the leaderboard page');
         console.log(app.locals.currentUser, 'the current user on the leaderboard page');
 
@@ -258,7 +261,7 @@ connection.connect(function(err) {
     /*=====================================
          GET AVAILABLE PHOTOS
     ======================================*/
-    app.get("/api/photos", function(req, res) {
+    app.get(BASE_PATH + "/api/photos", function(req, res) {
         const fs = require('fs');
         const gameCardsDir = path.join(__dirname, 'public', 'photos', 'gameCards');
         
@@ -318,7 +321,7 @@ connection.connect(function(err) {
     /*=====================================
             START GAME
     ======================================*/
-    app.post("/startGame", function(req, res) {
+    app.post(BASE_PATH + "/startGame", function(req, res) {
         let playerName = req.body.playerName;
         
         // Validate player name
@@ -364,7 +367,7 @@ connection.connect(function(err) {
     /*=====================================
          POST SCORE
     ======================================*/
-    app.post('/postScore', function(req, res) {
+    app.post(BASE_PATH + '/postScore', function(req, res) {
         console.log(req.body, "req.body in the POST postScore");
 
         // Validate required fields
@@ -413,7 +416,7 @@ connection.connect(function(err) {
                     });
                 }
                 console.log(results.affectedRows, "rows affected for POST SCORE");
-                res.redirect(getBaseUrl(req) + "/leaderBoard");
+                res.redirect(getBaseUrl(req) + BASE_PATH + "/leaderBoard");
             }
         );
     });//end app.post postScore
@@ -421,7 +424,7 @@ connection.connect(function(err) {
     /*=====================================
          LEADER BOARD FILTERING
     ======================================*/
-    app.post("/leaderBoard", function (req, res){
+    app.post(BASE_PATH + "/leaderBoard", function (req, res){
         let choose = req.body;
         console.log(choose , "filter options");
        
@@ -433,7 +436,7 @@ connection.connect(function(err) {
             app.locals.filterOption = "all_Players";
         }
 
-        res.redirect(getBaseUrl(req) + "/leaderBoard");
+        res.redirect(getBaseUrl(req) + BASE_PATH + "/leaderBoard");
 
     });//end app.post leaderboard filtering
 
