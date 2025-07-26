@@ -157,7 +157,7 @@ a{
 @media screen and (max-width: 768px) {
     header {
         min-height: 80px;
-        padding: 10px 15px;
+        padding: 15px 15px 10px 15px; /* Added top padding */
         flex-direction: column;
         gap: 8px;
     }
@@ -202,8 +202,8 @@ a{
     
     #headerLinks button,
     #newGameBtn {
-        height: 32px;
-        padding: 5px 10px;
+        height: 40px; /* Increased from 32px for better text visibility */
+        padding: 8px 12px; /* Increased padding */
         font-size: 12px;
         margin: 0;
         order: 2;
@@ -219,7 +219,7 @@ a{
 @media screen and (max-width: 480px) {
     header {
         min-height: 70px;
-        padding: 8px 10px;
+        padding: 12px 10px 8px 10px; /* Added top padding */
         gap: 6px;
     }
     
@@ -251,8 +251,8 @@ a{
     
     #headerLinks button,
     #newGameBtn {
-        height: 28px;
-        padding: 3px 6px;
+        height: 36px; /* Increased from 28px for better text visibility */
+        padding: 6px 8px; /* Increased padding */
         font-size: 10px;
         margin: 0;
     }
@@ -267,7 +267,7 @@ a{
 @media screen and (max-width: 360px) {
     header {
         min-height: 60px;
-        padding: 6px 8px;
+        padding: 10px 8px 6px 8px; /* Added top padding */
         gap: 4px;
     }
     
@@ -287,8 +287,8 @@ a{
     
     #headerLinks button,
     #newGameBtn {
-        height: 24px;
-        padding: 2px 4px;
+        height: 32px; /* Increased from 24px for better text visibility */
+        padding: 4px 6px; /* Increased padding */
         font-size: 9px;
     }
     
