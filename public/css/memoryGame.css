@@ -167,6 +167,10 @@ body {
     overflow-y: auto;
 }
 
+#leavePagePopUp{
+    top: 155px;
+}
+
 /*H1's for the divs to post score or leave page*/
 #goodJob,
 #leavePageH1{
@@ -319,6 +323,10 @@ body {
         border-radius: 10px;
     }
     
+    #leavePagePopUp {
+        top: 145px;
+    }
+    
     #goodJob,
     #leavePageH1 {
         padding: 8px;
@@ -364,6 +372,10 @@ body {
         max-height: 55vh;
         padding: 10px;
         top: 120px;
+    }
+    
+    #leavePagePopUp {
+        top: 135px;
     }
     
     #goodJob,
