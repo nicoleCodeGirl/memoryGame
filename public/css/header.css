@@ -158,27 +158,61 @@ a{
     header {
         min-height: 80px;
         padding: 10px 15px;
+        flex-direction: column;
+        gap: 8px;
     }
     
     #playerWelcome {
         font-size: 20px;
+        margin: 0;
+        order: 1;
+    }
+    
+    #floatRight {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: nowrap;
     }
     
     #headerDate {
         font-size: 14px;
         padding: 3px 12px;
+        margin: 0;
+        order: 1;
+    }
+    
+    #headerLinks {
+        order: 2;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: nowrap;
+        justify-content: center;
+    }
+    
+    #startTimeH4 {
+        font-size: 14px;
+        padding: 6px 10px;
+        min-width: auto;
+        margin: 0;
+        order: 1;
     }
     
     #headerLinks button,
     #newGameBtn {
-        height: 35px;
-        padding: 6px 12px;
-        font-size: 13px;
+        height: 32px;
+        padding: 5px 10px;
+        font-size: 12px;
+        margin: 0;
+        order: 2;
     }
     
     #gameTitle,
     #pageTitleH1 {
         font-size: 1.5em;
+        order: 3;
     }
 }
 
@@ -186,31 +220,80 @@ a{
     header {
         min-height: 70px;
         padding: 8px 10px;
+        gap: 6px;
     }
     
     #playerWelcome {
         font-size: 16px;
+        margin: 0;
+    }
+    
+    #floatRight {
+        gap: 6px;
     }
     
     #headerDate {
         font-size: 12px;
         padding: 2px 8px;
+        margin: 0;
+    }
+    
+    #headerLinks {
+        gap: 4px;
+    }
+    
+    #startTimeH4 {
+        font-size: 12px;
+        padding: 4px 8px;
+        min-width: auto;
+        margin: 0;
     }
     
     #headerLinks button,
     #newGameBtn {
-        height: 30px;
-        padding: 4px 8px;
-        font-size: 11px;
+        height: 28px;
+        padding: 3px 6px;
+        font-size: 10px;
+        margin: 0;
     }
     
     #gameTitle,
     #pageTitleH1 {
         font-size: 1.2em;
     }
+}
+
+/* Extra small mobile devices */
+@media screen and (max-width: 360px) {
+    header {
+        min-height: 60px;
+        padding: 6px 8px;
+        gap: 4px;
+    }
     
-    #floatRight {
-        gap: 8px;
+    #playerWelcome {
+        font-size: 14px;
+    }
+    
+    #headerDate {
+        font-size: 10px;
+        padding: 1px 6px;
+    }
+    
+    #startTimeH4 {
+        font-size: 10px;
+        padding: 3px 6px;
+    }
+    
+    #headerLinks button,
+    #newGameBtn {
+        height: 24px;
+        padding: 2px 4px;
+        font-size: 9px;
+    }
+    
+    #headerLinks {
+        gap: 2px;
     }
 }
 
