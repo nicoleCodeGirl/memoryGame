@@ -30,13 +30,22 @@ app.enable("view cache");
 /*=====================================
         MySQL connection
 ======================================*/
-var connection = mysql.createConnection({
-    host: process.env.DB_HOST || "localhost",
-    port: process.env.DB_PORT || 3306,
-    user: process.env.DB_USER || "root",
-    password: process.env.DB_PASSWORD || "butterflyMySql619!",
-    database: process.env.DB_NAME || "memoryGameDB" // Add database name to avoid multiple `USE` statements
-});
+var connection;
+
+// Check if we have a DATABASE_URL (Railway) or separate connection params (local)
+if (process.env.DATABASE_URL) {
+    // Railway provides a full connection URL
+    connection = mysql.createConnection(process.env.DATABASE_URL);
+} else {
+    // Local development with separate parameters
+    connection = mysql.createConnection({
+        host: process.env.DB_HOST || "localhost",
+        port: process.env.DB_PORT || 3306,
+        user: process.env.DB_USER || "root",
+        password: process.env.DB_PASSWORD || "butterflyMySql619!",
+        database: process.env.DB_NAME || "memoryGameDB"
+    });
+}
 
 //CONNECT
 connection.connect(function(err) {
@@ -69,14 +78,20 @@ connection.connect(function(err) {
         try {
             console.log("Starting database setup...");
             
-            await executeQuery("DROP DATABASE IF EXISTS memoryGameDB");
-            console.log("Database dropped successfully");
+            // For Railway, the database already exists, so we don't need to create/drop it
+            if (!process.env.DATABASE_URL) {
+                // Only for local development
+                await executeQuery("DROP DATABASE IF EXISTS memoryGameDB");
+                console.log("Database dropped successfully");
 
-            await executeQuery("CREATE DATABASE memoryGameDB");
-            console.log("Database created successfully");
+                await executeQuery("CREATE DATABASE memoryGameDB");
+                console.log("Database created successfully");
 
-            await executeQuery("USE memoryGameDB");
-            console.log("Using memoryGameDB");
+                await executeQuery("USE memoryGameDB");
+                console.log("Using memoryGameDB");
+            } else {
+                console.log("Using Railway MySQL database");
+            }
 
             await executeQuery(`
                 CREATE TABLE leaderboard (
