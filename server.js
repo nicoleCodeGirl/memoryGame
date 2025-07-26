@@ -134,7 +134,6 @@ connection.connect(function(err) {
     
     // Set up the rest of the app
     setupApp();
-});//end connect.connection
 
 // Function to set up app without database
 function setupAppWithoutDatabase() {
