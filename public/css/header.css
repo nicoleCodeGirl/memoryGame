@@ -153,6 +153,67 @@ a{
     text-overflow: ellipsis;
 }
 
+/* Mobile responsive styles */
+@media screen and (max-width: 768px) {
+    header {
+        min-height: 80px;
+        padding: 10px 15px;
+    }
+    
+    #playerWelcome {
+        font-size: 20px;
+    }
+    
+    #headerDate {
+        font-size: 14px;
+        padding: 3px 12px;
+    }
+    
+    #headerLinks button,
+    #newGameBtn {
+        height: 35px;
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    
+    #gameTitle,
+    #pageTitleH1 {
+        font-size: 1.5em;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header {
+        min-height: 70px;
+        padding: 8px 10px;
+    }
+    
+    #playerWelcome {
+        font-size: 16px;
+    }
+    
+    #headerDate {
+        font-size: 12px;
+        padding: 2px 8px;
+    }
+    
+    #headerLinks button,
+    #newGameBtn {
+        height: 30px;
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    #gameTitle,
+    #pageTitleH1 {
+        font-size: 1.2em;
+    }
+    
+    #floatRight {
+        gap: 8px;
+    }
+}
+
 
 
 
