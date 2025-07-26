@@ -450,7 +450,7 @@ function setupApp() {
 
         if (!connection) {
             // No database available, just redirect to leaderboard
-            console.log("No database available, score not saved");
+            console.log("No database available, score not saved - redirecting to leaderboard");
             res.redirect(getBaseUrl(req) + BASE_PATH + "/leaderBoard");
             return;
         }
@@ -468,10 +468,10 @@ function setupApp() {
                         time_end: req.body.time_end,
                         total_time: totalTime
                     });
-                    return res.status(500).json({ 
-                        error: "Failed to save score",
-                        message: "Unable to save your score to the leaderboard"
-                    });
+                    // Instead of returning JSON error, redirect to leaderboard
+                    console.log("Database error occurred, redirecting to leaderboard");
+                    res.redirect(getBaseUrl(req) + BASE_PATH + "/leaderBoard");
+                    return;
                 }
                 console.log(results.affectedRows, "rows affected for POST SCORE");
                 res.redirect(getBaseUrl(req) + BASE_PATH + "/leaderBoard");

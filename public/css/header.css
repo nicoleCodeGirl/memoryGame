@@ -62,16 +62,7 @@ header {
 
 
 #headerDate{
-    font-size: 18px;
-    color: #4a148c;
-    font-weight: bold;
-    background: #fff;
-    padding: 4px 16px;
-    border-radius: 20px;
-    border: 1.5px solid #8a2be2;
-    box-shadow: 0 2px 8px rgba(74, 20, 140, 0.08);
-    display: inline-block;
-    margin-right: 8px;
+    display: none; /* Hide the date completely */
 }
 
 #startTimeH4{
@@ -176,15 +167,8 @@ a{
         flex-wrap: nowrap;
     }
     
-    #headerDate {
-        font-size: 14px;
-        padding: 3px 12px;
-        margin: 0;
-        order: 1;
-    }
-    
     #headerLinks {
-        order: 2;
+        order: 1;
         display: flex;
         align-items: center;
         gap: 8px;
@@ -232,12 +216,6 @@ a{
         gap: 6px;
     }
     
-    #headerDate {
-        font-size: 12px;
-        padding: 2px 8px;
-        margin: 0;
-    }
-    
     #headerLinks {
         gap: 4px;
     }
@@ -273,11 +251,6 @@ a{
     
     #playerWelcome {
         font-size: 14px;
-    }
-    
-    #headerDate {
-        font-size: 10px;
-        padding: 1px 6px;
     }
     
     #startTimeH4 {

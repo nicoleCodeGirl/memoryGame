@@ -1,11 +1,15 @@
-/*=========================================
-Function to update clock in the header
-==========================================*/
-setInterval(function () {
-let theDate2 = new Date();
-let todaysDate2 = theDate2.toDateString();
-let todaysTime2 = theDate2.toLocaleTimeString();
-let headerDate = document.getElementById("headerDate");
-headerDate.innerHTML = todaysDate2 + " " + todaysTime2;
+// Update the start time display
+function updateStartTime() {
+    const startTimeSpan = document.getElementById('startTimeSpan');
+    if (startTimeSpan) {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString();
+        startTimeSpan.textContent = timeString;
+    }
+}
 
-},100);
+// Update start time every second
+setInterval(updateStartTime, 1000);
+
+// Initial update
+updateStartTime();
