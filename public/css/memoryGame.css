@@ -233,7 +233,7 @@ body {
 
 
 #postScoreBody{
-    height: 20rem;
+    height: 15rem;
     padding: 20px;
     color: #ff69b4;
     font-size: 16px;
@@ -241,7 +241,7 @@ body {
     overflow-y: auto;
 }
 #leavePageBody{
-    height: 20rem;
+    height: 15rem;
     padding: 30px;
     color: #ff69b4;
     font-size: 18px;
