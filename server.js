@@ -43,7 +43,11 @@ connection.connect(function(err) {
     if (err) {
         console.error("Error connecting to the database:", err.message);
         console.error("Please ensure MySQL is running and the connection details are correct");
-        process.exit(1); // Exit the process if the connection fails
+        console.error("Starting server without database functionality...");
+        
+        // Set up app without database
+        setupAppWithoutDatabase();
+        return;
     }
     console.log("Connected as id " + connection.threadId);
 
@@ -127,6 +131,30 @@ connection.connect(function(err) {
     app.locals.currentUser = "Player";
     app.locals.winners = [];
     app.locals.filterOption = null;
+    
+    // Set up the rest of the app
+    setupApp();
+});//end connect.connection
+
+// Function to set up app without database
+function setupAppWithoutDatabase() {
+    console.log("Setting up app without database functionality...");
+    
+    /*=====================================
+        LOCAL EJS TEMPLATE VARIABALES
+    ======================================*/
+    app.locals.users = [];
+    app.locals.status = null;
+    app.locals.currentUser = "Player";
+    app.locals.winners = [];
+    app.locals.filterOption = null;
+    
+    // Set up the rest of the app
+    setupApp();
+}
+
+// Function to set up the main application
+function setupApp() {
 
     /*=====================================
         MIDDLEWARE FUNCTIONS AND ROUTES
@@ -207,6 +235,15 @@ connection.connect(function(err) {
             renderPage();
         }
 
+        if (!connection) {
+            // No database available, show empty leaderboard
+            console.log("No database available, showing empty leaderboard");
+            app.locals.winners = [];
+            app.locals.filterOption = "all_Players";
+            renderPage();
+            return;
+        }
+        
         if(app.locals.filterOption == 'all_Players' || app.locals.filterOption == undefined){
             connection.query("SELECT user_name, game_date, game_complete from memoryGameDB.leaderboard order by game_complete",
                 function (err, results){
@@ -397,6 +434,13 @@ connection.connect(function(err) {
         // Sanitize player name
         playerName = playerName.trim().substring(0, 255); // Limit length and trim whitespace
 
+        if (!connection) {
+            // No database available, just redirect to leaderboard
+            console.log("No database available, score not saved");
+            res.redirect(getBaseUrl(req) + BASE_PATH + "/leaderBoard");
+            return;
+        }
+        
         connection.query(
             "INSERT INTO leaderboard (user_name, game_date, game_start, game_end, game_complete) VALUES (?, ?, ?, ?, ?)",
             [playerName, req.body.date_played, req.body.time_start, req.body.time_end, totalTime],
@@ -463,14 +507,18 @@ connection.connect(function(err) {
         console.log('SIGTERM received, shutting down gracefully...');
         server.close(() => {
             console.log('Server closed');
-            connection.end((err) => {
-                if (err) {
-                    console.error('Error closing database connection:', err);
-                } else {
-                    console.log('Database connection closed');
-                }
+            if (connection) {
+                connection.end((err) => {
+                    if (err) {
+                        console.error('Error closing database connection:', err);
+                    } else {
+                        console.log('Database connection closed');
+                    }
+                    process.exit(0);
+                });
+            } else {
                 process.exit(0);
-            });
+            }
         });
     });
 
@@ -478,15 +526,20 @@ connection.connect(function(err) {
         console.log('SIGINT received, shutting down gracefully...');
         server.close(() => {
             console.log('Server closed');
-            connection.end((err) => {
-                if (err) {
-                    console.error('Error closing database connection:', err);
-                } else {
-                    console.log('Database connection closed');
-                }
+            if (connection) {
+                connection.end((err) => {
+                    if (err) {
+                        console.error('Error closing database connection:', err);
+                    } else {
+                        console.log('Database connection closed');
+                    }
+                    process.exit(0);
+                });
+            } else {
                 process.exit(0);
-            });
+            }
         });
     });
 
+}//end setupApp function
 });//end connect.connection
