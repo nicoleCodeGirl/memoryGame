@@ -100,7 +100,7 @@ the one to select a profile*/
     color: #111;
     width: 200px;
     height: 50px;
-    margin: 20px auto;
+    margin: 10px auto;
     border: 2px solid #8a2be2;
     border-radius: 10px;
     font-weight: bold;
@@ -115,12 +115,33 @@ the one to select a profile*/
     box-shadow: 0 4px 8px rgba(138, 43, 226, 0.4);
 }
 
+#newPlayerBtn{
+    background: linear-gradient(135deg, #8a2be2, #ff69b4);
+    color: #111;
+    width: 200px;
+    height: 50px;
+    margin: 10px 10px;
+    border: 2px solid #00ff00;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    align-self: center;
+}
+
+#newPlayerBtn:hover{
+    background: linear-gradient(135deg, #ff69b4, #8a2be2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 255, 0, 0.4);
+}
+
 #enterNameButtons{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 10px;
     width: 100%;
+    gap: 20px;
 }
 
 #playerNameInput{
