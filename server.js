@@ -32,10 +32,10 @@ app.enable("view cache");
 ======================================*/
 var connection;
 
-// Check if we have a DATABASE_URL (Railway) or separate connection params (local)
-if (process.env.DATABASE_URL) {
+// Check if we have a MYSQL_URL (Railway) or separate connection params (local)
+if (process.env.MYSQL_URL) {
     // Railway provides a full connection URL
-    connection = mysql.createConnection(process.env.DATABASE_URL);
+    connection = mysql.createConnection(process.env.MYSQL_URL);
 } else {
     // Local development with separate parameters
     connection = mysql.createConnection({
@@ -79,7 +79,7 @@ connection.connect(function(err) {
             console.log("Starting database setup...");
             
             // For Railway, the database already exists, so we don't need to create/drop it
-            if (!process.env.DATABASE_URL) {
+            if (!process.env.MYSQL_URL) {
                 // Only for local development
                 await executeQuery("DROP DATABASE IF EXISTS memoryGameDB");
                 console.log("Database dropped successfully");
