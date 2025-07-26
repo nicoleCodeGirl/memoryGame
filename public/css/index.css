@@ -63,16 +63,6 @@
         font-size: 18px;
         margin-bottom: 15px;
     }
-    /* Leaderboard filter box (assuming #filterBox or similar) */
-    #filterBox, .filter-popup {
-        top: 15% !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        position: fixed !important;
-        width: 90% !important;
-        max-width: 400px !important;
-        z-index: 1100;
-    }
 }
 
 @media screen and (max-width: 480px) {
@@ -107,16 +97,6 @@
         padding: 10px;
         font-size: 16px;
         margin-bottom: 10px;
-    }
-    /* Leaderboard filter box (assuming #filterBox or similar) */
-    #filterBox, .filter-popup {
-        top: 15% !important;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        position: fixed !important;
-        width: 95% !important;
-        max-width: 320px !important;
-        z-index: 1100;
     }
 }
 

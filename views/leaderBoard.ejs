@@ -48,20 +48,6 @@
         </div><!--end table wrapper-->
     </div><!--end leaderBoardWrapper-->
 
-
-    <div id="filterDiv">
-        <div id="filterWrapper">
-            <span type="text" id="filterDefault"> <%= filter_default %> </span>
-            <form id="filterForm" action="/leaderBoard" method="POST">
-            <label id="filterLabel">Filter scores by:</label>
-            <select name="filter_option" id="choose">
-                <option value="all_Players" >All Player Scores</option>
-                <option value="your_Scores">Only your scores</option>
-                <input id="filterNowBtn" type="submit" value="Filter Now"/>
-            </select>
-        </form>
-    </div><!--end filterDiv-->
-
     <script src="js/updateClock.js"></script>
     <script src="js/leaderBoard.js"></script>
 </body>

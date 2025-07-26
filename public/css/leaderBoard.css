@@ -11,7 +11,8 @@
     background: linear-gradient(135deg, #111, #1a1a1a);
     border: 3px solid #ff69b4; 
     width: 90%;
-    height: 80%;
+    height: auto;
+    max-height: 70%;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -20,6 +21,7 @@
     box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
     padding: 30px;
     box-sizing: border-box;
+    overflow-y: auto;
 }
 
 #leaderBoardH1{
@@ -60,56 +62,6 @@
     border: 2px solid #00ff00;
 }
 
-
-#filterDiv{
-    background: linear-gradient(135deg, #ff69b4, #00ff00);
-    padding: 15px;
-    width: 100%;
-    margin: 20px auto 20px auto;
-    border-radius: 10px;
-    border: 2px solid #8a2be2;
-}
-
-#filterWrapper{
-    background: linear-gradient(135deg, #111, #1a1a1a);
-    border: 2px solid #ff69b4;
-    padding: 15px;
-    border-radius: 10px;
-}
-
-
-select{
-    margin: 10px;
-    padding: 8px 15px;
-    background: linear-gradient(135deg, #111, #1a1a1a);
-    color: #ff69b4;
-    border: 2px solid #00ff00;
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-#filterNowBtn{
-    background: linear-gradient(135deg, #ff69b4, #00ff00);
-    color: #111;
-    border: 2px solid #8a2be2;
-    border-radius: 5px;
-    font-weight: bold;
-    padding: 8px 15px;
-    margin: 10px;
-    transition: all 0.3s ease;
-}
-
-#filterNowBtn:hover{
-    background: linear-gradient(135deg, #00ff00, #ff69b4);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(138, 43, 226, 0.4);
-}
-
-#filterDefault{
-    display:none;
-}
-
 /*This is the scroll bar on the leaderboard table*/
 /*It also changes the scrollbar of the browser*/
 ::-webkit-scrollbar {width: 9px; height: .5px; background: rgba(255, 105, 180, 0.3); }
@@ -147,4 +99,74 @@ select{
     background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
     color: #00ff00;
     text-shadow: 1px 1px 2px #000000, -1px -1px 2px #000000, 1px -1px 2px #000000, -1px 1px 2px #000000;
+}
+
+/* Mobile responsive styles */
+@media screen and (max-width: 768px) {
+    #leaderBoardWrapper {
+        width: 95%;
+        height: auto;
+        max-height: 75%;
+        padding: 20px;
+        top: 15%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 10px;
+    }
+    
+    #leaderBoardH1 {
+        padding: 12px;
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    #tableWrapper {
+        height: auto;
+        max-height: 60vh;
+        margin-top: 15px;
+        padding: 8px;
+    }
+    
+    #leaderBoardTable th,
+    #leaderBoardTable td {
+        padding: 8px 4px;
+        font-size: 12px;
+    }
+    
+    #leaderBoardTable th {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #leaderBoardWrapper {
+        width: 98%;
+        height: auto;
+        max-height: 70%;
+        padding: 15px;
+        top: 15%;
+    }
+    
+    #leaderBoardH1 {
+        padding: 10px;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    
+    #tableWrapper {
+        height: auto;
+        max-height: 50vh;
+        margin-top: 10px;
+        padding: 5px;
+    }
+    
+    #leaderBoardTable th,
+    #leaderBoardTable td {
+        padding: 6px 2px;
+        font-size: 11px;
+    }
+    
+    #leaderBoardTable th {
+        font-size: 12px;
+    }
 }
