@@ -65,6 +65,13 @@ header {
     font-size: 18px;
     color: #4a148c;
     font-weight: bold;
+    background: #fff;
+    padding: 4px 16px;
+    border-radius: 20px;
+    border: 1.5px solid #8a2be2;
+    box-shadow: 0 2px 8px rgba(74, 20, 140, 0.08);
+    display: inline-block;
+    margin-right: 8px;
 }
 
 #startTimeH4{
