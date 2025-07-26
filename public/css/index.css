@@ -66,12 +66,16 @@ the one to select a profile*/
 }
 
 #enterNameBody{
-    height: 25rem;
+    height: auto;
+    min-height: 20rem;
     padding: 30px;
     color: #ff69b4;
     font-size: 18px;
     line-height: 1.8;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 #selectProfileBody{
@@ -96,12 +100,13 @@ the one to select a profile*/
     color: #111;
     width: 200px;
     height: 50px;
-    margin: 20px;
+    margin: 20px auto;
     border: 2px solid #8a2be2;
     border-radius: 10px;
     font-weight: bold;
     font-size: 18px;
     transition: all 0.3s ease;
+    align-self: center;
 }
 
 #startGameBtn:hover{
@@ -114,7 +119,8 @@ the one to select a profile*/
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
+    margin-top: 20px;
+    width: 100%;
 }
 
 #playerNameInput{

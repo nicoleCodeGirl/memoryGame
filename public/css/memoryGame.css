@@ -152,7 +152,8 @@ body {
     background: linear-gradient(135deg, #111, #1a1a1a);
     border: 3px solid #ff69b4; 
     width: 70%;
-    height: 60%;
+    height: auto;
+    min-height: 60%;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -163,6 +164,8 @@ body {
     z-index: 1000;
     padding: 30px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -186,6 +189,7 @@ body {
     height: auto;
     margin-top: 20px;
     flex-wrap: wrap;
+    flex-shrink: 0;
 }
 
 #noPost,
@@ -233,21 +237,25 @@ body {
 
 
 #postScoreBody{
-    height: 20rem;
+    height: auto;
+    min-height: 15rem;
     padding: 20px;
     color: #ff69b4;
     font-size: 16px;
+    flex: 1;
     line-height: 1.6;
     overflow-y: auto;
 }
 #leavePageBody{
-    height: 20rem;
+    height: auto;
+    min-height: 15rem;
     padding: 30px;
     color: #ff69b4;
     font-size: 18px;
     line-height: 1.8;
     overflow-y: auto;
     text-align: center;
+    flex: 1;
 }
 
 #leavePageBody h1{
